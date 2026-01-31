@@ -1333,7 +1333,6 @@ button:focus-visible {
 .woocommerce-product-gallery__image img,
 .woocommerce ul.products li.product img,
 .product-card img,
-.woocommerce img,
 .woocommerce-loop-product__link img {
     aspect-ratio: 1 / 1;
     object-fit: contain;
