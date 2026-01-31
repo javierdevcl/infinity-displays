@@ -34,90 +34,116 @@
     });
 
     /**
-     * Mobile Menu Toggle
+     * Mobile Menu Modal with Drill-Down Navigation
      */
     function initMobileMenu() {
-        const menuToggle = $('#mobile-menu-toggle');
-        const mobileMenu = $('#mobile-menu');
-        const menuIcon = menuToggle.find('.menu-icon');
-        const closeIcon = menuToggle.find('.close-icon');
+        const $menuToggle = $('#mobile-menu-toggle');
+        const $modal = $('#mobile-menu-modal');
+        const $mainPanel = $('#mobile-menu-main');
+        const $submenuPanel = $('#mobile-submenu-panel');
+        const $submenuTitle = $('#mobile-submenu-title');
+        const $submenuContent = $('#mobile-submenu-content');
 
-        menuToggle.on('click', function() {
-            mobileMenu.toggleClass('active');
-            menuIcon.toggleClass('hidden');
-            closeIcon.toggleClass('hidden');
+        // Open modal
+        $menuToggle.on('click', function() {
+            openMobileMenu();
         });
 
-        // Close menu when clicking outside
-        $(document).on('click', function(e) {
-            if (!$(e.target).closest('#mobile-menu, #mobile-menu-toggle').length) {
-                mobileMenu.removeClass('active');
-                menuIcon.removeClass('hidden');
-                closeIcon.addClass('hidden');
+        // Close modal buttons
+        $('#mobile-menu-close, #mobile-submenu-close').on('click', function() {
+            closeMobileMenu();
+        });
+
+        // Back button - return to main menu
+        $('#mobile-menu-back').on('click', function() {
+            showMainPanel();
+        });
+
+        // Close when clicking overlay (outside panels)
+        $modal.on('click', function(e) {
+            if ($(e.target).is($modal)) {
+                closeMobileMenu();
             }
         });
 
-        // Handle mobile submenu toggle - Only for categories menu
-        $('#mobile-menu .menu-item-has-children').each(function() {
-            const $parent = $(this);
-            const $link = $parent.find('> a');
-            const $submenu = $parent.find('> .sub-menu');
-            const categoryName = $link.text().trim();
-
-            // Don't add toggle if it already exists or if parent has sub-menu
-            if (!$parent.find('> .submenu-toggle').length && $submenu.length) {
-                const $toggle = $('<button class="submenu-toggle" aria-label="Toggle submenu"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>');
-
-                // Make link container relative and add toggle button after link
-                $parent.css('position', 'relative');
-                $link.after($toggle);
-
-                // Add header with close button to submenu if not already present
-                if (!$submenu.find('.submenu-header').length) {
-                    const $header = $('<div class="submenu-header"><span class="submenu-title">' + categoryName + '</span><button class="submenu-close" aria-label="Cerrar submenú"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button></div>');
-                    $submenu.prepend($header);
-                }
-            }
-        });
-
-        // Toggle submenu on button click
-        $(document).on('click', '#mobile-menu .submenu-toggle', function(e) {
+        // Handle category items with children - open submenu
+        $(document).on('click', '.mobile-menu-item.has-children', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-
             const $button = $(this);
-            const $parent = $button.closest('.menu-item-has-children');
-            const $submenu = $parent.find('> .sub-menu');
+            const submenuId = $button.data('submenu');
+            const title = $button.data('title');
+            const parentLink = $button.data('link');
 
-            // Close other open submenus at the same level
-            $parent.siblings('.menu-item-has-children').find('> .sub-menu').slideUp(250);
-            $parent.siblings('.menu-item-has-children').removeClass('submenu-open');
+            // Find submenu data
+            const $submenuData = $button.next('.mobile-submenu-data');
 
-            // Toggle this submenu
-            $parent.toggleClass('submenu-open');
-            $submenu.slideToggle(250);
-        });
+            if ($submenuData.length) {
+                // Build submenu content
+                let submenuHtml = '';
 
-        // Close submenu on X button click
-        $(document).on('click', '#mobile-menu .submenu-close', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+                // Add "Ver todo [Category]" link
+                submenuHtml += '<a href="' + parentLink + '" class="mobile-menu-item mobile-menu-view-all">Ver todo ' + title + '</a>';
+                submenuHtml += '<div class="mobile-menu-divider"></div>';
 
-            const $submenu = $(this).closest('.sub-menu');
-            const $parent = $submenu.closest('.menu-item-has-children');
+                // Add submenu items
+                $submenuData.find('.mobile-menu-item, a').each(function() {
+                    const $item = $(this);
+                    const href = $item.attr('href') || $item.data('link') || '#';
+                    const text = $item.text().trim();
+                    const hasChildren = $item.hasClass('has-children');
 
-            $parent.removeClass('submenu-open');
-            $submenu.slideUp(250);
-        });
+                    if (hasChildren) {
+                        // Nested submenu item
+                        submenuHtml += '<button class="mobile-menu-item has-children" data-title="' + text + '" data-link="' + href + '">';
+                        submenuHtml += text;
+                        submenuHtml += '<svg class="mobile-menu-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>';
+                        submenuHtml += '</button>';
+                    } else {
+                        submenuHtml += '<a href="' + href + '" class="mobile-menu-item">' + text + '</a>';
+                    }
+                });
 
-        // Toggle submenu on parent link click
-        $('#mobile-menu .menu-item-has-children > a').on('click', function(e) {
-            const $parent = $(this).closest('.menu-item-has-children');
-            if ($parent.find('> .sub-menu').length) {
-                e.preventDefault();
-                $parent.find('> .submenu-toggle').trigger('click');
+                // Update submenu panel
+                $submenuTitle.text(title);
+                $submenuContent.html(submenuHtml);
+
+                // Show submenu panel
+                showSubmenuPanel();
             }
         });
+
+        // Close menu on ESC key
+        $(document).on('keydown', function(e) {
+            if (e.keyCode === 27 && $modal.hasClass('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Prevent body scroll when modal is open
+        function openMobileMenu() {
+            $modal.addClass('active');
+            $('body').addClass('mobile-menu-open');
+            showMainPanel();
+        }
+
+        function closeMobileMenu() {
+            $modal.removeClass('active');
+            $('body').removeClass('mobile-menu-open');
+            // Reset to main panel for next open
+            setTimeout(function() {
+                showMainPanel();
+            }, 300);
+        }
+
+        function showMainPanel() {
+            $mainPanel.removeClass('slide-out').addClass('active');
+            $submenuPanel.removeClass('active');
+        }
+
+        function showSubmenuPanel() {
+            $mainPanel.addClass('slide-out');
+            $submenuPanel.addClass('active');
+        }
     }
 
     /**
