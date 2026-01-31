@@ -143,8 +143,8 @@ get_header();
 
                 <!-- Item 4 -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
-                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
                         </svg>
                     </div>

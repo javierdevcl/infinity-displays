@@ -28,11 +28,11 @@ if (!$video_stories->have_posts()) {
 
             if (!$video_url) continue;
         ?>
-        <div class="flex flex-col items-center gap-2 cursor-pointer story-circle"
+        <div class="flex flex-col items-center gap-2 cursor-pointer story-item"
              onclick="openVideoLightbox('<?php echo esc_js($video_url); ?>', '<?php echo esc_js($label); ?>')">
-            <div class="w-20 h-20 md:w-24 md:h-24 rounded-full p-[3px] bg-gradient-to-br from-primary via-primary/80 to-secondary hover:scale-105 transition-transform">
-                <div class="w-full h-full rounded-full overflow-hidden bg-background p-[2px]">
-                    <div class="w-full h-full rounded-full overflow-hidden relative group">
+            <div class="w-[100px] h-[100px] md:w-[120px] md:h-[120px] rounded-xl p-[3px] bg-gradient-to-br from-primary via-primary/80 to-primary/60 hover:scale-105 transition-transform shadow-md">
+                <div class="w-full h-full rounded-[10px] overflow-hidden bg-background p-[2px]">
+                    <div class="w-full h-full rounded-[8px] overflow-hidden relative group">
                         <?php if ($thumbnail): ?>
                         <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($label); ?>" class="w-full h-full object-cover" />
                         <?php else: ?>
@@ -46,7 +46,7 @@ if (!$video_stories->have_posts()) {
                     </div>
                 </div>
             </div>
-            <span class="text-sm text-muted-foreground font-medium text-center">
+            <span class="text-xs text-muted-foreground font-medium text-center max-w-[100px] md:max-w-[120px] line-clamp-2">
                 <?php echo esc_html($label ? $label : get_the_title()); ?>
             </span>
         </div>
