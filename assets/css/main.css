@@ -2299,6 +2299,22 @@ header nav > ul > li.menu-item-has-children:hover > a::after {
 }
 
 /* ========================================
+   MOBILE HEADER
+   ======================================== */
+@media (max-width: 767px) {
+    /* Make header container relative for logo centering */
+    header .container {
+        position: relative;
+    }
+
+    /* Mobile logo sizing */
+    header .custom-logo {
+        max-height: 2.5rem;
+        width: auto;
+    }
+}
+
+/* ========================================
    MOBILE MENU MODAL (Fullscreen with Drill-Down)
    ======================================== */
 
