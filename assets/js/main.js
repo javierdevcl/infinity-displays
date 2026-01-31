@@ -178,8 +178,8 @@
      * Update Cart Count in Header
      */
     function updateCartCount() {
-        // Listen for WooCommerce cart updates
-        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals', function() {
+        // Function to update all cart count badges
+        function refreshCartCount() {
             $.ajax({
                 url: infinityAjax.ajaxurl,
                 type: 'POST',
@@ -188,10 +188,24 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        $('.cart-count').text(response.data.count);
+                        const count = parseInt(response.data.count) || 0;
+                        $('.cart-count').each(function() {
+                            const $badge = $(this);
+                            $badge.text(count);
+                            if (count > 0) {
+                                $badge.removeClass('hidden');
+                            } else {
+                                $badge.addClass('hidden');
+                            }
+                        });
                     }
                 }
             });
+        }
+
+        // Listen for WooCommerce cart updates
+        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals wc_fragments_refreshed', function() {
+            refreshCartCount();
         });
     }
 
@@ -422,22 +436,6 @@
             }
         });
     }
-
-    /**
-     * AJAX Get Cart Count
-     */
-    $.ajax({
-        url: infinityAjax.ajaxurl,
-        type: 'POST',
-        data: {
-            action: 'infinity_get_cart_count'
-        },
-        success: function(response) {
-            if (response.success && $('.cart-count').length) {
-                $('.cart-count').text(response.data.count);
-            }
-        }
-    });
 
 })(jQuery);
 
