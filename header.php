@@ -84,7 +84,7 @@
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
-                        <?php $cart_count = WC()->cart->get_cart_contents_count(); ?><span class="cart-count cart-count-desktop absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1<?php echo $cart_count > 0 ? '' : ' hidden'; ?>"><?php echo $cart_count; ?></span>
+                        <?php $cart_count = WC()->cart->get_cart_contents_count(); ?><span class="infinity-cart-badge infinity-cart-badge-desktop absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1<?php echo $cart_count > 0 ? '' : ' hidden'; ?>"><?php echo $cart_count; ?></span>
                     </button>
 
                     <?php if (is_user_logged_in()): ?>
@@ -137,7 +137,7 @@
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
-                        <?php $cart_count_mobile = WC()->cart->get_cart_contents_count(); ?><span class="cart-count cart-count-mobile absolute -top-0.5 -right-0.5 bg-primary text-white text-xs font-bold rounded-full min-w-[1.125rem] h-[1.125rem] flex items-center justify-center text-[10px]<?php echo $cart_count_mobile > 0 ? '' : ' hidden'; ?>"><?php echo $cart_count_mobile; ?></span>
+                        <?php $cart_count_mobile = WC()->cart->get_cart_contents_count(); ?><span class="infinity-cart-badge infinity-cart-badge-mobile absolute -top-0.5 -right-0.5 bg-primary text-white text-xs font-bold rounded-full min-w-[1.125rem] h-[1.125rem] flex items-center justify-center text-[10px]<?php echo $cart_count_mobile > 0 ? '' : ' hidden'; ?>"><?php echo $cart_count_mobile; ?></span>
                     </button>
                 </div>
             </div>

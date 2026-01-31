@@ -176,8 +176,7 @@
 
     /**
      * Update Cart Count in Header
-     * Header badges are updated via AJAX only on cart events (not on page load)
-     * This prevents flash from stale WooCommerce fragment cache
+     * Uses unique class names (infinity-cart-badge) to avoid WooCommerce fragment cache
      */
     function updateCartCount() {
         // Function to fetch and update cart count
@@ -191,22 +190,16 @@
                 success: function(response) {
                     if (response.success) {
                         var count = parseInt(response.data.count) || 0;
-                        // Update desktop badge
-                        var $desktop = $('.cart-count-desktop');
-                        $desktop.text(count);
-                        if (count > 0) {
-                            $desktop.removeClass('hidden');
-                        } else {
-                            $desktop.addClass('hidden');
-                        }
-                        // Update mobile badge
-                        var $mobile = $('.cart-count-mobile');
-                        $mobile.text(count);
-                        if (count > 0) {
-                            $mobile.removeClass('hidden');
-                        } else {
-                            $mobile.addClass('hidden');
-                        }
+                        // Update all infinity cart badges
+                        $('.infinity-cart-badge').each(function() {
+                            var $badge = $(this);
+                            $badge.text(count);
+                            if (count > 0) {
+                                $badge.removeClass('hidden');
+                            } else {
+                                $badge.addClass('hidden');
+                            }
+                        });
                     }
                 }
             });
