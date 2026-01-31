@@ -561,6 +561,7 @@ header .custom-logo {
    ASPECT RATIO
    ======================================== */
 .aspect-square { aspect-ratio: 1 / 1; }
+.aspect-video { aspect-ratio: 16 / 9; }
 .aspect-\[4\/3\] { aspect-ratio: 4 / 3; }
 .aspect-\[3\/4\] { aspect-ratio: 3 / 4; }
 
