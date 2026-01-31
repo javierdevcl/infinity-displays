@@ -3203,6 +3203,103 @@ form.checkout {
     text-decoration: underline;
 }
 
+/* Login Form Styles */
+.woocommerce-login-wrapper {
+    padding: 2rem 1rem;
+}
+
+.woocommerce-login-wrapper .woocommerce-error,
+.woocommerce-login-wrapper .woocommerce-message {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.woocommerce-login-wrapper .woocommerce-error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+}
+
+.woocommerce-login-wrapper .woocommerce-message {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #16a34a;
+}
+
+/* Responsive utilities for md: breakpoint */
+@media (min-width: 768px) {
+    .md\:w-64 { width: 16rem; }
+    .md\:flex-row { flex-direction: row; }
+    .md\:gap-8 { gap: 2rem; }
+    .md\:sticky { position: sticky; }
+    .md\:top-48 { top: 12rem; }
+}
+
+/* My Account Table Responsive */
+.woocommerce-MyAccount-content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.woocommerce-MyAccount-content table th,
+.woocommerce-MyAccount-content table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.woocommerce-MyAccount-content table thead th {
+    background-color: #f9fafb;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+}
+
+@media (max-width: 767px) {
+    .woocommerce-MyAccount-content table,
+    .woocommerce-MyAccount-content thead,
+    .woocommerce-MyAccount-content tbody,
+    .woocommerce-MyAccount-content th,
+    .woocommerce-MyAccount-content td,
+    .woocommerce-MyAccount-content tr {
+        display: block;
+    }
+
+    .woocommerce-MyAccount-content thead {
+        display: none;
+    }
+
+    .woocommerce-MyAccount-content tr {
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .woocommerce-MyAccount-content td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .woocommerce-MyAccount-content td:last-child {
+        border-bottom: none;
+    }
+
+    .woocommerce-MyAccount-content td::before {
+        content: attr(data-title);
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #6b7280;
+    }
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .woocommerce-MyAccount-wrapper {
