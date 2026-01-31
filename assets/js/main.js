@@ -61,14 +61,22 @@
         $('#mobile-menu .menu-item-has-children').each(function() {
             const $parent = $(this);
             const $link = $parent.find('> a');
+            const $submenu = $parent.find('> .sub-menu');
+            const categoryName = $link.text().trim();
 
             // Don't add toggle if it already exists or if parent has sub-menu
-            if (!$parent.find('> .submenu-toggle').length && $parent.find('> .sub-menu').length) {
+            if (!$parent.find('> .submenu-toggle').length && $submenu.length) {
                 const $toggle = $('<button class="submenu-toggle" aria-label="Toggle submenu"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>');
 
                 // Make link container relative and add toggle button after link
                 $parent.css('position', 'relative');
                 $link.after($toggle);
+
+                // Add header with close button to submenu if not already present
+                if (!$submenu.find('.submenu-header').length) {
+                    const $header = $('<div class="submenu-header"><span class="submenu-title">' + categoryName + '</span><button class="submenu-close" aria-label="Cerrar submenú"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button></div>');
+                    $submenu.prepend($header);
+                }
             }
         });
 
@@ -88,6 +96,18 @@
             // Toggle this submenu
             $parent.toggleClass('submenu-open');
             $submenu.slideToggle(250);
+        });
+
+        // Close submenu on X button click
+        $(document).on('click', '#mobile-menu .submenu-close', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const $submenu = $(this).closest('.sub-menu');
+            const $parent = $submenu.closest('.menu-item-has-children');
+
+            $parent.removeClass('submenu-open');
+            $submenu.slideUp(250);
         });
 
         // Toggle submenu on parent link click
