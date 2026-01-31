@@ -29,25 +29,25 @@ body {
 
 /* Espacio para header fixed */
 body.home {
-    padding-top: 11.5rem;
+    padding-top: 11rem;
 }
 
 .woocommerce,
 .single-product,
 .page {
-    padding-top: 11.5rem;
+    padding-top: 11rem;
 }
 
 /* Ajuste de padding para móvil (header más pequeño + buscador) */
 @media (max-width: 767px) {
     body.home {
-        padding-top: 10rem;
+        padding-top: 7.5rem;
     }
 
     .woocommerce,
     .single-product,
     .page {
-        padding-top: 10rem;
+        padding-top: 7.5rem;
     }
 }
 
