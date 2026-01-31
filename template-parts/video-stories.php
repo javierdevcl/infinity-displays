@@ -20,7 +20,7 @@ if (!$video_stories->have_posts()) {
     </div>
 
     <!-- Stories - spread across full width -->
-    <div class="grid grid-cols-3 md:grid-cols-6 gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         <?php while ($video_stories->have_posts()): $video_stories->the_post();
             $video_url = get_post_meta(get_the_ID(), '_video_youtube_url', true);
             $label = get_post_meta(get_the_ID(), '_video_label', true);
@@ -28,9 +28,9 @@ if (!$video_stories->have_posts()) {
 
             if (!$video_url) continue;
         ?>
-        <div class="flex flex-col items-center gap-2 cursor-pointer story-item"
+        <div class="flex flex-col items-center gap-3 cursor-pointer story-item"
              onclick="openVideoLightbox('<?php echo esc_js($video_url); ?>', '<?php echo esc_js($label); ?>')">
-            <div class="w-[100px] h-[100px] md:w-[120px] md:h-[120px] rounded-xl p-[3px] bg-gradient-to-br from-primary via-primary/80 to-primary/60 hover:scale-105 transition-transform shadow-md">
+            <div class="w-full aspect-square max-w-[200px] rounded-xl p-[3px] bg-gradient-to-br from-primary via-primary/80 to-primary/60 hover:scale-105 transition-transform shadow-md">
                 <div class="w-full h-full rounded-[10px] overflow-hidden bg-background p-[2px]">
                     <div class="w-full h-full rounded-[8px] overflow-hidden relative group">
                         <?php if ($thumbnail): ?>
@@ -39,14 +39,14 @@ if (!$video_stories->have_posts()) {
                         <div class="w-full h-full bg-gray-200"></div>
                         <?php endif; ?>
                         <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/20 transition-colors">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M8 5v14l11-7z"/>
                             </svg>
                         </div>
                     </div>
                 </div>
             </div>
-            <span class="text-xs text-muted-foreground font-medium text-center max-w-[100px] md:max-w-[120px] line-clamp-2">
+            <span class="text-sm text-muted-foreground font-medium text-center max-w-[200px] line-clamp-2">
                 <?php echo esc_html($label ? $label : get_the_title()); ?>
             </span>
         </div>
