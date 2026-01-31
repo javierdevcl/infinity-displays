@@ -2201,6 +2201,58 @@ textarea::placeholder {
     min-height: 40px;
 }
 
+/* ========================================
+   TAILWIND ARBITRARY VALUE UTILITIES
+   (Classes not in pre-compiled Tailwind CSS)
+   ======================================== */
+
+/* Height utilities */
+.h-\[16px\] { height: 16px; }
+.h-\[18px\] { height: 18px; }
+
+/* Width utilities */
+.w-\[16px\] { width: 16px; }
+.w-\[18px\] { width: 18px; }
+.w-\[120px\] { width: 120px; }
+
+/* Min-width utilities */
+.min-w-\[16px\] { min-width: 16px; }
+.min-w-\[18px\] { min-width: 18px; }
+
+/* Text size utilities */
+.text-\[9px\] { font-size: 9px; }
+.text-\[10px\] { font-size: 10px; }
+
+/* Padding utilities */
+.p-\[2px\] { padding: 2px; }
+.p-\[3px\] { padding: 3px; }
+
+/* Position utilities */
+.top-0\.5 { top: 0.125rem; }
+.right-0\.5 { right: 0.125rem; }
+.-top-0\.5 { top: -0.125rem; }
+.-right-0\.5 { right: -0.125rem; }
+
+/* Gap utilities */
+.gap-16 { gap: 4rem; }
+
+/* Primary color with opacity */
+.bg-primary\/5 { background-color: rgba(0, 168, 204, 0.05); }
+.bg-primary\/10 { background-color: rgba(0, 168, 204, 0.1); }
+.bg-primary\/20 { background-color: rgba(0, 168, 204, 0.2); }
+.bg-primary\/90 { background-color: rgba(0, 168, 204, 0.9); }
+.hover\:bg-primary\/5:hover { background-color: rgba(0, 168, 204, 0.05); }
+.hover\:bg-primary\/20:hover { background-color: rgba(0, 168, 204, 0.2); }
+.hover\:bg-primary\/90:hover { background-color: rgba(0, 168, 204, 0.9); }
+
+/* Focus ring with primary color */
+.focus\:ring-primary\/50:focus {
+    --tw-ring-color: rgba(0, 168, 204, 0.5);
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
 /* Line clamp for descriptions */
 .line-clamp-2 {
     display: -webkit-box;
