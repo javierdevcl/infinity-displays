@@ -512,6 +512,16 @@ add_action('wp_ajax_infinity_send_quote', 'infinity_ajax_send_quote');
 add_action('wp_ajax_nopriv_infinity_send_quote', 'infinity_ajax_send_quote');
 
 /**
+ * AJAX handler to get cart count for header badges
+ */
+function infinity_get_cart_count() {
+    $count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
+    wp_send_json_success(array('count' => $count));
+}
+add_action('wp_ajax_infinity_get_cart_count', 'infinity_get_cart_count');
+add_action('wp_ajax_nopriv_infinity_get_cart_count', 'infinity_get_cart_count');
+
+/**
  * Add side cart content to WooCommerce fragments
  * This ensures the cart updates properly when items are added
  */
