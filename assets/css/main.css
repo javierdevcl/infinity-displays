@@ -2337,12 +2337,14 @@ header nav > ul > li.menu-item-has-children:hover > a::after {
 #mobile-menu nav ul.sub-menu {
     display: none;
     padding-left: 0;
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    background-color: #f9fafb;
-    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
     border-left: 3px solid #00A8CC;
     overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e5e7eb;
 }
 
 #mobile-menu nav ul.sub-menu.open {
@@ -2356,30 +2358,41 @@ header nav > ul > li.menu-item-has-children:hover > a::after {
 #mobile-menu nav ul.sub-menu li a {
     font-size: 0.875rem;
     padding: 0.875rem 1rem 0.875rem 1.25rem;
-    color: #6b7280;
+    color: #4b5563;
     font-weight: 400;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #f3f4f6;
     border-radius: 0;
+    background-color: #ffffff;
+    transition: all 0.15s ease;
 }
 
 #mobile-menu nav ul.sub-menu li:first-child a {
-    padding-top: 1rem;
+    padding-top: 0.875rem;
 }
 
 #mobile-menu nav ul.sub-menu li:last-child a {
     padding-bottom: 1rem;
     border-bottom: none;
+    border-radius: 0 0 0.65rem 0.65rem;
 }
 
 #mobile-menu nav ul.sub-menu li a:hover {
     color: #00A8CC;
-    background-color: #ffffff;
+    background-color: #f0f9ff;
     padding-left: 1.5rem;
 }
 
 /* Mobile submenu toggle button */
 #mobile-menu .menu-item-has-children {
     position: relative;
+}
+
+/* Parent item active state when submenu is open */
+#mobile-menu .menu-item-has-children.submenu-open > a {
+    color: #00A8CC;
+    background-color: #f0f9ff;
+    border-radius: 0.5rem;
+    border-bottom-color: transparent;
 }
 
 /* Hide the default ::after arrow in mobile menu */
@@ -2431,6 +2444,50 @@ header nav > ul > li.menu-item-has-children:hover > a::after {
 
 #mobile-menu .submenu-open > .submenu-toggle svg {
     transform: rotate(180deg);
+}
+
+/* Submenu header with title and close button */
+#mobile-menu .submenu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.875rem 1rem;
+    background: linear-gradient(to right, #f0f9ff, #ffffff);
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 0.75rem 0.75rem 0 0;
+}
+
+#mobile-menu .submenu-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #00A8CC;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+#mobile-menu .submenu-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#mobile-menu .submenu-close:hover {
+    background: #fee2e2;
+    border-color: #fecaca;
+    color: #dc2626;
+}
+
+#mobile-menu .submenu-close svg {
+    width: 1.125rem;
+    height: 1.125rem;
 }
 
 /* ========================================
