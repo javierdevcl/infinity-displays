@@ -561,6 +561,7 @@ header .custom-logo {
    ASPECT RATIO
    ======================================== */
 .aspect-square { aspect-ratio: 1 / 1; }
+.aspect-video { aspect-ratio: 16 / 9; }
 .aspect-\[4\/3\] { aspect-ratio: 4 / 3; }
 .aspect-\[3\/4\] { aspect-ratio: 3 / 4; }
 
@@ -700,14 +701,16 @@ header .custom-logo {
 /* Reset prose styles for WooCommerce content */
 .prose .woocommerce-MyAccount-wrapper,
 .prose .woocommerce-MyAccount-content,
-.prose .woocommerce-login-wrapper {
+.prose .woocommerce-login-wrapper,
+.prose .woocommerce-MyAccount-dashboard {
     max-width: none;
     color: inherit;
 }
 
 .prose .woocommerce-MyAccount-wrapper p,
 .prose .woocommerce-MyAccount-content p,
-.prose .woocommerce-login-wrapper p {
+.prose .woocommerce-login-wrapper p,
+.prose .woocommerce-MyAccount-dashboard p {
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -719,9 +722,32 @@ header .custom-logo {
 }
 
 .prose .woocommerce-MyAccount-wrapper h2,
-.prose .woocommerce-MyAccount-content h2 {
+.prose .woocommerce-MyAccount-content h2,
+.prose .woocommerce-MyAccount-dashboard h2,
+.prose .woocommerce-MyAccount-dashboard h3 {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+/* My Account Dashboard Grid Fix */
+.woocommerce-MyAccount-dashboard .grid {
+    display: grid !important;
+}
+
+.woocommerce-MyAccount-dashboard .grid.grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+    .woocommerce-MyAccount-dashboard .grid.md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .woocommerce-MyAccount-dashboard .grid.lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 /* ========================================
@@ -1317,13 +1343,6 @@ button {
 /* General button resets */
 .infinity-quote-btn {
     cursor: pointer;
-}
-
-/* Make sure all buttons with bg colors have no border */
-.bg-primary,
-.bg-green-600,
-.bg-white {
-    border: none !important;
 }
 
 /* Button base styles */
@@ -2390,6 +2409,27 @@ textarea::placeholder {
 .bg-cyan-600 { background-color: #0891b2; }
 .text-cyan-600 { color: #0891b2; }
 .text-cyan-700 { color: #0e7490; }
+
+/* Blue colors (for dashboard) */
+.from-blue-50 { --tw-gradient-from: #eff6ff; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(239, 246, 255, 0)); }
+.to-blue-100 { --tw-gradient-to: #dbeafe; }
+.bg-blue-500 { background-color: #3b82f6; }
+.text-blue-600 { color: #2563eb; }
+.border-blue-200 { border-color: #bfdbfe; }
+
+/* Purple colors (for dashboard) */
+.from-purple-50 { --tw-gradient-from: #faf5ff; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(250, 245, 255, 0)); }
+.to-purple-100 { --tw-gradient-to: #f3e8ff; }
+.bg-purple-500 { background-color: #a855f7; }
+.text-purple-600 { color: #9333ea; }
+.border-purple-200 { border-color: #e9d5ff; }
+
+/* Green colors (for dashboard) */
+.from-green-50 { --tw-gradient-from: #f0fdf4; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(240, 253, 244, 0)); }
+.to-green-100 { --tw-gradient-to: #dcfce7; }
+.bg-green-500 { background-color: #22c55e; }
+.text-green-600 { color: #16a34a; }
+.border-green-200 { border-color: #bbf7d0; }
 
 /* Line clamp for descriptions */
 .line-clamp-2 {
