@@ -606,33 +606,19 @@ function infinity_add_cart_fragments($fragments) {
     // Add cart count
     ob_start();
     ?>
-    <span class="side-cart-count ml-auto text-sm font-medium bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center">
-        <?php echo WC()->cart->get_cart_contents_count(); ?>
-    </span>
+    <span class="side-cart-count ml-auto text-sm font-medium bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
     <?php
-    $fragments['.side-cart-count'] = ob_get_clean();
+    $fragments['.side-cart-count'] = trim(ob_get_clean());
 
     // Add header cart count badge (used in header for both desktop and mobile)
     $cart_count = WC()->cart->get_cart_contents_count();
-    $hidden_class = $cart_count > 0 ? '' : 'hidden';
+    $hidden_class = $cart_count > 0 ? '' : ' hidden';
 
     // Desktop cart badge
-    ob_start();
-    ?>
-    <span class="cart-count cart-count-desktop absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1 <?php echo $hidden_class; ?>">
-        <?php echo $cart_count; ?>
-    </span>
-    <?php
-    $fragments['.cart-count-desktop'] = ob_get_clean();
+    $fragments['.cart-count-desktop'] = '<span class="cart-count cart-count-desktop absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1' . $hidden_class . '">' . $cart_count . '</span>';
 
     // Mobile cart badge
-    ob_start();
-    ?>
-    <span class="cart-count cart-count-mobile absolute -top-0.5 -right-0.5 bg-primary text-white text-xs font-bold rounded-full min-w-[1.125rem] h-[1.125rem] flex items-center justify-center text-[10px] <?php echo $hidden_class; ?>">
-        <?php echo $cart_count; ?>
-    </span>
-    <?php
-    $fragments['.cart-count-mobile'] = ob_get_clean();
+    $fragments['.cart-count-mobile'] = '<span class="cart-count cart-count-mobile absolute -top-0.5 -right-0.5 bg-primary text-white text-xs font-bold rounded-full min-w-[1.125rem] h-[1.125rem] flex items-center justify-center text-[10px]' . $hidden_class . '">' . $cart_count . '</span>';
 
     // Add footer content
     ob_start();
