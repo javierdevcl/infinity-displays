@@ -1319,13 +1319,6 @@ button {
     cursor: pointer;
 }
 
-/* Make sure all buttons with bg colors have no border */
-.bg-primary,
-.bg-green-600,
-.bg-white {
-    border: none !important;
-}
-
 /* Button base styles */
 button.inline-flex,
 button.flex {
