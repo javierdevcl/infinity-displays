@@ -2340,6 +2340,12 @@ textarea::placeholder {
 .bg-black\/40 { background-color: rgba(0, 0, 0, 0.4); }
 .group-hover\:bg-black\/20:hover { background-color: rgba(0, 0, 0, 0.2); }
 
+/* Gray colors (missing from Tailwind build) */
+.bg-gray-800 { background-color: #1f2937; }
+.bg-gray-900 { background-color: #111827; }
+.hover\:bg-gray-800:hover { background-color: #1f2937; }
+.text-gray-800 { color: #1f2937; }
+
 /* Line clamp for descriptions */
 .line-clamp-2 {
     display: -webkit-box;
