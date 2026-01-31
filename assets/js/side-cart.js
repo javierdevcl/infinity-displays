@@ -212,9 +212,15 @@ function closeSideCart() {
 
                     // Refresh side cart
                     refreshSideCart();
+
+                    // Trigger event to update header cart badges
+                    $(document.body).trigger('updated_cart_totals');
                 } else if (response && response.success) {
                     // Refresh side cart even if no fragments
                     refreshSideCart();
+
+                    // Trigger event to update header cart badges
+                    $(document.body).trigger('updated_cart_totals');
                 }
             },
             error: function(xhr, status, error) {
