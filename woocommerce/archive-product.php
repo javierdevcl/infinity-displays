@@ -42,7 +42,7 @@ $product_count = wc_get_loop_prop('total');
 </div>
 
 <!-- Page Header -->
-<div class="bg-secondary/20 py-12">
+<div class="bg-gradient-to-br from-primary/5 via-secondary/30 to-primary/10 py-12 md:py-16">
     <div class="container mx-auto px-4">
         <h1 class="font-display text-4xl lg:text-5xl font-bold text-foreground mb-3">
             <?php echo esc_html($page_title); ?>
@@ -53,7 +53,7 @@ $product_count = wc_get_loop_prop('total');
             </p>
         <?php endif; ?>
         <?php if ($page_description): ?>
-            <div class="mt-3 text-muted-foreground prose max-w-3xl">
+            <div class="mt-4 text-muted-foreground max-w-3xl">
                 <?php echo wp_kses_post($page_description); ?>
             </div>
         <?php endif; ?>
@@ -123,17 +123,17 @@ $categories = get_terms(array(
 
 if ($categories && !is_wp_error($categories) && count($categories) > 1):
 ?>
-<div class="bg-secondary/30 py-12">
+<div class="bg-gray-900 py-12">
     <div class="container mx-auto px-4">
-        <h2 class="font-display text-2xl font-bold text-foreground mb-6">
+        <h2 class="font-display text-2xl font-bold text-white mb-6">
             Explorar por Categoría
         </h2>
         <div class="flex flex-wrap gap-3">
             <?php foreach ($categories as $category): ?>
                 <a href="<?php echo get_term_link($category); ?>"
-                   class="px-4 py-2 bg-white rounded-lg border border-border hover:border-primary hover:text-primary transition-colors font-medium">
+                   class="px-4 py-2 bg-white/10 rounded-lg border border-white/20 text-white hover:bg-white hover:text-gray-900 transition-colors font-medium">
                     <?php echo esc_html($category->name); ?>
-                    <span class="text-muted-foreground text-sm ml-1">(<?php echo $category->count; ?>)</span>
+                    <span class="text-white/60 ml-1">(<?php echo $category->count; ?>)</span>
                 </a>
             <?php endforeach; ?>
         </div>
