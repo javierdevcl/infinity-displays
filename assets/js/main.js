@@ -176,36 +176,23 @@
 
     /**
      * Update Cart Count in Header
+     * Cart counts are now updated via WooCommerce fragments (see functions.php)
+     * This function provides a fallback and handles visibility
      */
     function updateCartCount() {
-        // Function to update all cart count badges
-        function refreshCartCount() {
-            $.ajax({
-                url: infinityAjax.ajaxurl,
-                type: 'POST',
-                data: {
-                    action: 'infinity_get_cart_count'
-                },
-                success: function(response) {
-                    if (response.success) {
-                        const count = parseInt(response.data.count) || 0;
-                        $('.cart-count').each(function() {
-                            const $badge = $(this);
-                            $badge.text(count);
-                            if (count > 0) {
-                                $badge.removeClass('hidden');
-                            } else {
-                                $badge.addClass('hidden');
-                            }
-                        });
-                    }
+        // WooCommerce fragments handle the update automatically
+        // This listener ensures visibility is correct after fragment replacement
+        $(document.body).on('wc_fragments_refreshed wc_fragments_loaded', function() {
+            // Fragments already replaced the elements, just ensure they exist
+            $('.cart-count-desktop, .cart-count-mobile').each(function() {
+                const $badge = $(this);
+                const count = parseInt($badge.text()) || 0;
+                if (count > 0) {
+                    $badge.removeClass('hidden');
+                } else {
+                    $badge.addClass('hidden');
                 }
             });
-        }
-
-        // Listen for WooCommerce cart updates
-        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals wc_fragments_refreshed', function() {
-            refreshCartCount();
         });
     }
 
