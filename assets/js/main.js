@@ -212,8 +212,8 @@
             });
         }
 
-        // Listen for cart events and update badges
-        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals wc_fragments_refreshed', function() {
+        // Listen for cart events only (NOT wc_fragments_refreshed to avoid page load flash)
+        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals', function() {
             refreshHeaderCartCount();
         });
     }
