@@ -603,22 +603,15 @@ function infinity_add_cart_fragments($fragments) {
     <?php
     $fragments['.side-cart-items-wrapper'] = ob_get_clean();
 
-    // Add cart count
+    // Add cart count for side cart only
     ob_start();
     ?>
     <span class="side-cart-count ml-auto text-sm font-medium bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
     <?php
     $fragments['.side-cart-count'] = trim(ob_get_clean());
 
-    // Add header cart count badge (used in header for both desktop and mobile)
-    $cart_count = WC()->cart->get_cart_contents_count();
-    $hidden_class = $cart_count > 0 ? '' : ' hidden';
-
-    // Desktop cart badge
-    $fragments['.cart-count-desktop'] = '<span class="cart-count cart-count-desktop absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1' . $hidden_class . '">' . $cart_count . '</span>';
-
-    // Mobile cart badge
-    $fragments['.cart-count-mobile'] = '<span class="cart-count cart-count-mobile absolute -top-0.5 -right-0.5 bg-primary text-white text-xs font-bold rounded-full min-w-[1.125rem] h-[1.125rem] flex items-center justify-center text-[10px]' . $hidden_class . '">' . $cart_count . '</span>';
+    // IMPORTANT: Header cart badges are NOT in fragments to avoid flash from stale cache
+    // They update via custom AJAX on cart events (see main.js updateCartCount)
 
     // Add footer content
     ob_start();
