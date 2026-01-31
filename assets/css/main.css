@@ -38,6 +38,12 @@ body.home {
     padding-top: 11rem;
 }
 
+/* Evitar doble padding en páginas WooCommerce */
+body.woocommerce-page article.page,
+body.woocommerce-page .page {
+    padding-top: 0;
+}
+
 /* Ajuste de padding para móvil (header más pequeño + buscador) */
 @media (max-width: 767px) {
     body.home {
@@ -48,6 +54,11 @@ body.home {
     .single-product,
     .page {
         padding-top: 7.5rem;
+    }
+
+    body.woocommerce-page article.page,
+    body.woocommerce-page .page {
+        padding-top: 0;
     }
 }
 
@@ -684,6 +695,33 @@ header .custom-logo {
 
 .prose ul {
     list-style-type: disc;
+}
+
+/* Reset prose styles for WooCommerce content */
+.prose .woocommerce-MyAccount-wrapper,
+.prose .woocommerce-MyAccount-content,
+.prose .woocommerce-login-wrapper {
+    max-width: none;
+    color: inherit;
+}
+
+.prose .woocommerce-MyAccount-wrapper p,
+.prose .woocommerce-MyAccount-content p,
+.prose .woocommerce-login-wrapper p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.prose .woocommerce-MyAccount-wrapper ul,
+.prose .woocommerce-MyAccount-content ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.prose .woocommerce-MyAccount-wrapper h2,
+.prose .woocommerce-MyAccount-content h2 {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 /* ========================================
@@ -2293,10 +2331,10 @@ textarea::placeholder {
     --tw-gradient-to: rgba(0, 168, 204, 0.8) var(--tw-gradient-to-position);
 }
 .to-secondary {
-    --tw-gradient-to: #F97316 var(--tw-gradient-to-position);
+    --tw-gradient-to: #E2E8F0 var(--tw-gradient-to-position);
 }
 .to-secondary\/10 {
-    --tw-gradient-to: rgba(249, 115, 22, 0.1) var(--tw-gradient-to-position);
+    --tw-gradient-to: rgba(226, 232, 240, 0.1) var(--tw-gradient-to-position);
 }
 
 /* Gradient via colors */
@@ -2345,6 +2383,13 @@ textarea::placeholder {
 .bg-gray-900 { background-color: #111827; }
 .hover\:bg-gray-800:hover { background-color: #1f2937; }
 .text-gray-800 { color: #1f2937; }
+
+/* Cyan colors (brand complementary) */
+.bg-cyan-100 { background-color: #cffafe; }
+.bg-cyan-500 { background-color: #06b6d4; }
+.bg-cyan-600 { background-color: #0891b2; }
+.text-cyan-600 { color: #0891b2; }
+.text-cyan-700 { color: #0e7490; }
 
 /* Line clamp for descriptions */
 .line-clamp-2 {
