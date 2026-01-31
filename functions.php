@@ -47,6 +47,44 @@ function infinity_theme_setup() {
 add_action('after_setup_theme', 'infinity_theme_setup');
 
 /**
+ * Custom Walker for Mobile Menu
+ * Generates flat HTML structure for JavaScript-driven drill-down navigation
+ */
+class Infinity_Mobile_Menu_Walker extends Walker_Nav_Menu {
+    public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
+        $has_children = !empty($item->classes) && in_array('menu-item-has-children', $item->classes);
+        $classes = 'mobile-menu-item';
+
+        if ($has_children) {
+            $classes .= ' has-children';
+            // For items with children, create a button that triggers submenu
+            $output .= '<button class="' . esc_attr($classes) . '" data-submenu="submenu-' . $item->ID . '" data-title="' . esc_attr($item->title) . '" data-link="' . esc_url($item->url) . '">';
+            $output .= esc_html($item->title);
+            $output .= '<svg class="mobile-menu-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>';
+            $output .= '</button>';
+        } else {
+            // Regular links
+            $output .= '<a class="' . esc_attr($classes) . '" href="' . esc_url($item->url) . '">';
+            $output .= esc_html($item->title);
+            $output .= '</a>';
+        }
+    }
+
+    public function end_el(&$output, $item, $depth = 0, $args = null) {
+        // No closing needed for our flat structure
+    }
+
+    public function start_lvl(&$output, $depth = 0, $args = null) {
+        // Store submenu items in a hidden container for JS to use
+        $output .= '<div class="mobile-submenu-data hidden">';
+    }
+
+    public function end_lvl(&$output, $depth = 0, $args = null) {
+        $output .= '</div>';
+    }
+}
+
+/**
  * Enqueue styles and scripts
  */
 function infinity_enqueue_scripts() {

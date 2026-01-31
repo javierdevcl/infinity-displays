@@ -84,16 +84,17 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
                         <?php $cart_count = WC()->cart->get_cart_contents_count(); ?>
-                        <?php if ($cart_count > 0): ?>
-                            <span class="cart-count absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                                <?php echo $cart_count; ?>
-                            </span>
-                        <?php endif; ?>
+                        <span class="cart-count absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1 <?php echo $cart_count > 0 ? '' : 'hidden'; ?>">
+                            <?php echo $cart_count; ?>
+                        </span>
                     </button>
 
                     <?php if (is_user_logged_in()): ?>
                         <a href="<?php echo wc_get_account_endpoint_url('dashboard'); ?>" class="px-4 py-2 text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
                             Mi Cuenta
+                        </a>
+                        <a href="<?php echo wp_logout_url(home_url()); ?>" class="px-4 py-2 text-sm font-medium bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md transition-colors">
+                            Cerrar Sesión
                         </a>
                     <?php else: ?>
                         <a href="<?php echo wc_get_account_endpoint_url('dashboard'); ?>" class="px-4 py-2 text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
@@ -105,15 +106,29 @@
                     <?php endif; ?>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <button class="md:hidden text-gray-900 p-2" id="mobile-menu-toggle" aria-label="Toggle menu">
-                    <svg class="w-6 h-6 menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                    <svg class="w-6 h-6 close-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
+                <!-- Mobile Actions -->
+                <div class="md:hidden flex items-center gap-1">
+                    <!-- Mobile Cart Icon with Badge -->
+                    <button onclick="openSideCart()" class="relative p-2 text-gray-700 hover:text-primary transition-colors" aria-label="Abrir carrito">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <?php $cart_count_mobile = WC()->cart->get_cart_contents_count(); ?>
+                        <span class="cart-count absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1 <?php echo $cart_count_mobile > 0 ? '' : 'hidden'; ?>">
+                            <?php echo $cart_count_mobile; ?>
+                        </span>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="text-gray-900 p-2" id="mobile-menu-toggle" aria-label="Toggle menu">
+                        <svg class="w-6 h-6 menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg class="w-6 h-6 close-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -168,63 +183,102 @@
         </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div class="md:hidden bg-white border-b border-gray-200 shadow-lg hidden" id="mobile-menu">
-        <div class="container mx-auto px-4 py-4">
-            <nav class="flex flex-col gap-1">
-                <!-- Categories -->
-                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider px-3 py-2">
-                    Categorías
-                </span>
-                <?php
-                wp_nav_menu(array(
-                    'theme_location' => 'categories',
-                    'container' => false,
-                    'menu_class' => 'flex flex-col gap-1',
-                    'fallback_cb' => function() {
-                        // Fallback to WooCommerce categories if no menu is set
-                        echo '<a href="' . get_permalink(wc_get_page_id('shop')) . '" class="px-3 py-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-md">Todos los productos</a>';
-                        $categories = infinity_get_product_categories();
-                        if ($categories && !is_wp_error($categories)):
-                            foreach ($categories as $category):
-                        ?>
-                            <a href="<?php echo get_term_link($category); ?>" class="px-3 py-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-md">
-                                <?php echo esc_html($category->name); ?>
+    <!-- Mobile Menu Modal (Fullscreen) -->
+    <div class="mobile-menu-modal" id="mobile-menu-modal">
+        <!-- Main Menu Panel -->
+        <div class="mobile-menu-panel" id="mobile-menu-main">
+            <div class="mobile-menu-header">
+                <span class="mobile-menu-title"></span>
+                <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Cerrar menú">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-menu-content">
+                <nav class="mobile-menu-nav">
+                    <!-- User actions at top -->
+                    <div class="mobile-menu-section">
+                        <a href="<?php echo home_url('/#contacto'); ?>" class="mobile-menu-item">
+                            Contacto
+                        </a>
+                        <?php if (is_user_logged_in()): ?>
+                            <a href="<?php echo wc_get_account_endpoint_url('dashboard'); ?>" class="mobile-menu-item">
+                                Mi Cuenta
                             </a>
+                        <?php else: ?>
+                            <a href="<?php echo wc_get_account_endpoint_url('dashboard'); ?>" class="mobile-menu-item">
+                                Iniciar Sesión
+                            </a>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="mobile-menu-divider"></div>
+
+                    <!-- Categories -->
+                    <div class="mobile-menu-section" id="mobile-categories-list">
                         <?php
-                            endforeach;
-                        endif;
-                    },
-                    'link_before' => '',
-                    'link_after' => '',
-                    'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-                ));
-                ?>
+                        wp_nav_menu(array(
+                            'theme_location' => 'categories',
+                            'container' => false,
+                            'menu_class' => 'mobile-menu-categories',
+                            'fallback_cb' => function() {
+                                echo '<a href="' . get_permalink(wc_get_page_id('shop')) . '" class="mobile-menu-item">Todos los productos</a>';
+                                $categories = infinity_get_product_categories();
+                                if ($categories && !is_wp_error($categories)):
+                                    foreach ($categories as $category):
+                                ?>
+                                    <a href="<?php echo get_term_link($category); ?>" class="mobile-menu-item">
+                                        <?php echo esc_html($category->name); ?>
+                                    </a>
+                                <?php
+                                    endforeach;
+                                endif;
+                            },
+                            'items_wrap' => '%3$s',
+                            'walker' => new Infinity_Mobile_Menu_Walker(),
+                        ));
+                        ?>
+                    </div>
 
-                <div class="border-t border-gray-200 my-3"></div>
+                    <div class="mobile-menu-divider"></div>
 
-                <a href="<?php echo home_url('/#contacto'); ?>" class="px-3 py-2 text-gray-600 hover:text-primary hover:bg-gray-50 rounded-md">
-                    Contacto
-                </a>
+                    <!-- Auth buttons -->
+                    <div class="mobile-menu-section mobile-menu-auth">
+                        <?php if (is_user_logged_in()): ?>
+                            <a href="<?php echo wp_logout_url(home_url()); ?>" class="mobile-menu-btn mobile-menu-btn-secondary">
+                                Cerrar Sesión
+                            </a>
+                        <?php else: ?>
+                            <a href="<?php echo home_url('/registro-socio'); ?>" class="mobile-menu-btn mobile-menu-btn-primary">
+                                Registrarse
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </nav>
+            </div>
+        </div>
 
-                <div class="flex gap-2 mt-4">
-                    <?php if (is_user_logged_in()): ?>
-                        <a href="<?php echo wc_get_account_endpoint_url('dashboard'); ?>" class="flex-1 px-4 py-2 text-sm font-medium text-center border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-md">
-                            Mi Cuenta
-                        </a>
-                        <a href="<?php echo wp_logout_url(home_url()); ?>" class="flex-1 px-4 py-2 text-sm font-medium text-center bg-secondary hover:bg-secondary/90 text-secondary-foreground rounded-md">
-                            Cerrar Sesión
-                        </a>
-                    <?php else: ?>
-                        <a href="<?php echo wc_get_account_endpoint_url('dashboard'); ?>" class="flex-1 px-4 py-2 text-sm font-medium text-center border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-md">
-                            Iniciar Sesión
-                        </a>
-                        <a href="<?php echo home_url('/registro-socio'); ?>" class="flex-1 px-4 py-2 text-sm font-medium text-center bg-secondary hover:bg-secondary/90 text-secondary-foreground rounded-md">
-                            Registrarse
-                        </a>
-                    <?php endif; ?>
-                </div>
-            </nav>
+        <!-- Submenu Panel (for drill-down) -->
+        <div class="mobile-menu-panel mobile-submenu-panel" id="mobile-submenu-panel">
+            <div class="mobile-menu-header">
+                <button class="mobile-menu-back" id="mobile-menu-back" aria-label="Volver">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <span class="mobile-submenu-title" id="mobile-submenu-title"></span>
+                <button class="mobile-menu-close" id="mobile-submenu-close" aria-label="Cerrar menú">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="mobile-menu-content">
+                <nav class="mobile-menu-nav" id="mobile-submenu-content">
+                    <!-- Submenu items will be injected here -->
+                </nav>
+            </div>
         </div>
     </div>
 </header>
