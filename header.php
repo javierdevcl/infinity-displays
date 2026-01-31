@@ -95,6 +95,9 @@
                         <a href="<?php echo wc_get_account_endpoint_url('dashboard'); ?>" class="px-4 py-2 text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
                             Mi Cuenta
                         </a>
+                        <a href="<?php echo wp_logout_url(home_url()); ?>" class="px-4 py-2 text-sm font-medium bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md transition-colors">
+                            Cerrar Sesión
+                        </a>
                     <?php else: ?>
                         <a href="<?php echo wc_get_account_endpoint_url('dashboard'); ?>" class="px-4 py-2 text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
                             Iniciar Sesión
@@ -105,15 +108,29 @@
                     <?php endif; ?>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <button class="md:hidden text-gray-900 p-2" id="mobile-menu-toggle" aria-label="Toggle menu">
-                    <svg class="w-6 h-6 menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                    <svg class="w-6 h-6 close-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
+                <!-- Mobile Actions -->
+                <div class="md:hidden flex items-center gap-1">
+                    <!-- Mobile Cart Icon with Badge -->
+                    <button onclick="openSideCart()" class="relative p-2 text-gray-700 hover:text-primary transition-colors" aria-label="Abrir carrito">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <?php $cart_count_mobile = WC()->cart->get_cart_contents_count(); ?>
+                        <span class="cart-count absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs font-bold rounded-full min-w-[1.25rem] h-5 flex items-center justify-center px-1 <?php echo $cart_count_mobile > 0 ? '' : 'hidden'; ?>">
+                            <?php echo $cart_count_mobile; ?>
+                        </span>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="text-gray-900 p-2" id="mobile-menu-toggle" aria-label="Toggle menu">
+                        <svg class="w-6 h-6 menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg class="w-6 h-6 close-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
