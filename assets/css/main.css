@@ -329,6 +329,20 @@ header {
     z-index: 1000;
 }
 
+/* Logo consistente en todas las páginas */
+header .custom-logo-link {
+    display: flex;
+    align-items: center;
+}
+
+header .custom-logo-link img,
+header .custom-logo {
+    height: 3rem;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+}
+
 /* Mobile menu animation */
 #mobile-menu {
     transition: all 0.3s ease-in-out;
@@ -2308,9 +2322,10 @@ header nav > ul > li.menu-item-has-children:hover > a::after {
     }
 
     /* Mobile logo sizing */
+    header .custom-logo-link img,
     header .custom-logo {
-        max-height: 2.5rem;
-        width: auto;
+        height: 2.5rem;
+        max-width: 140px;
     }
 }
 
