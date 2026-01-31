@@ -2252,6 +2252,100 @@ textarea::placeholder {
     box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
+/* Gradient utilities */
+.bg-gradient-to-r {
+    background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+.bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+}
+
+/* Gradient from colors */
+.from-primary {
+    --tw-gradient-from: #00A8CC var(--tw-gradient-from-position);
+    --tw-gradient-to: rgba(0, 168, 204, 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-primary\/5 {
+    --tw-gradient-from: rgba(0, 168, 204, 0.05) var(--tw-gradient-from-position);
+    --tw-gradient-to: rgba(0, 168, 204, 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-primary\/10 {
+    --tw-gradient-from: rgba(0, 168, 204, 0.1) var(--tw-gradient-from-position);
+    --tw-gradient-to: rgba(0, 168, 204, 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-gray-900 {
+    --tw-gradient-from: #111827 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgba(17, 24, 39, 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+/* Gradient to colors */
+.to-primary\/10 {
+    --tw-gradient-to: rgba(0, 168, 204, 0.1) var(--tw-gradient-to-position);
+}
+.to-primary\/20 {
+    --tw-gradient-to: rgba(0, 168, 204, 0.2) var(--tw-gradient-to-position);
+}
+.to-primary\/80 {
+    --tw-gradient-to: rgba(0, 168, 204, 0.8) var(--tw-gradient-to-position);
+}
+.to-secondary {
+    --tw-gradient-to: #F97316 var(--tw-gradient-to-position);
+}
+.to-secondary\/10 {
+    --tw-gradient-to: rgba(249, 115, 22, 0.1) var(--tw-gradient-to-position);
+}
+
+/* Gradient via colors */
+.via-gray-800 {
+    --tw-gradient-to: rgba(31, 41, 55, 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), #1f2937 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+.via-primary\/80 {
+    --tw-gradient-to: rgba(0, 168, 204, 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), rgba(0, 168, 204, 0.8) var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+/* White with opacity */
+.bg-white\/10 { background-color: rgba(255, 255, 255, 0.1); }
+.bg-white\/20 { background-color: rgba(255, 255, 255, 0.2); }
+.bg-white\/95 { background-color: rgba(255, 255, 255, 0.95); }
+.text-white\/50 { color: rgba(255, 255, 255, 0.5); }
+.text-white\/80 { color: rgba(255, 255, 255, 0.8); }
+.text-white\/90 { color: rgba(255, 255, 255, 0.9); }
+.hover\:bg-white\/10:hover { background-color: rgba(255, 255, 255, 0.1); }
+.hover\:bg-white\/20:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+/* Border with opacity */
+.border-border\/50 { border-color: rgba(229, 231, 235, 0.5); }
+.border-primary\/20 { border-color: rgba(0, 168, 204, 0.2); }
+.border-primary\/50 { border-color: rgba(0, 168, 204, 0.5); }
+.border-primary\/70 { border-color: rgba(0, 168, 204, 0.7); }
+.border-white\/20 { border-color: rgba(255, 255, 255, 0.2); }
+.hover\:border-primary\/50:hover { border-color: rgba(0, 168, 204, 0.5); }
+.hover\:border-primary\/70:hover { border-color: rgba(0, 168, 204, 0.7); }
+
+/* Secondary color with opacity */
+.bg-secondary\/10 { background-color: rgba(249, 115, 22, 0.1); }
+.bg-secondary\/20 { background-color: rgba(249, 115, 22, 0.2); }
+.bg-secondary\/30 { background-color: rgba(249, 115, 22, 0.3); }
+.bg-secondary\/50 { background-color: rgba(249, 115, 22, 0.5); }
+.hover\:bg-secondary\/10:hover { background-color: rgba(249, 115, 22, 0.1); }
+
+/* Black with opacity */
+.bg-black\/30 { background-color: rgba(0, 0, 0, 0.3); }
+.bg-black\/40 { background-color: rgba(0, 0, 0, 0.4); }
+.group-hover\:bg-black\/20:hover { background-color: rgba(0, 0, 0, 0.2); }
+
+/* Gray colors (missing from Tailwind build) */
+.bg-gray-800 { background-color: #1f2937; }
+.bg-gray-900 { background-color: #111827; }
+.hover\:bg-gray-800:hover { background-color: #1f2937; }
+.text-gray-800 { color: #1f2937; }
+
 /* Line clamp for descriptions */
 .line-clamp-2 {
     display: -webkit-box;
@@ -3201,6 +3295,103 @@ form.checkout {
 
 .woocommerce-MyAccount-downloads .download-file:hover {
     text-decoration: underline;
+}
+
+/* Login Form Styles */
+.woocommerce-login-wrapper {
+    padding: 2rem 1rem;
+}
+
+.woocommerce-login-wrapper .woocommerce-error,
+.woocommerce-login-wrapper .woocommerce-message {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.woocommerce-login-wrapper .woocommerce-error {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+}
+
+.woocommerce-login-wrapper .woocommerce-message {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #16a34a;
+}
+
+/* Responsive utilities for md: breakpoint */
+@media (min-width: 768px) {
+    .md\:w-64 { width: 16rem; }
+    .md\:flex-row { flex-direction: row; }
+    .md\:gap-8 { gap: 2rem; }
+    .md\:sticky { position: sticky; }
+    .md\:top-48 { top: 12rem; }
+}
+
+/* My Account Table Responsive */
+.woocommerce-MyAccount-content table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.woocommerce-MyAccount-content table th,
+.woocommerce-MyAccount-content table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.woocommerce-MyAccount-content table thead th {
+    background-color: #f9fafb;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+}
+
+@media (max-width: 767px) {
+    .woocommerce-MyAccount-content table,
+    .woocommerce-MyAccount-content thead,
+    .woocommerce-MyAccount-content tbody,
+    .woocommerce-MyAccount-content th,
+    .woocommerce-MyAccount-content td,
+    .woocommerce-MyAccount-content tr {
+        display: block;
+    }
+
+    .woocommerce-MyAccount-content thead {
+        display: none;
+    }
+
+    .woocommerce-MyAccount-content tr {
+        margin-bottom: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+
+    .woocommerce-MyAccount-content td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .woocommerce-MyAccount-content td:last-child {
+        border-bottom: none;
+    }
+
+    .woocommerce-MyAccount-content td::before {
+        content: attr(data-title);
+        font-weight: 600;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #6b7280;
+    }
 }
 
 /* Responsive */
