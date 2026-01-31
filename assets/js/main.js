@@ -176,23 +176,45 @@
 
     /**
      * Update Cart Count in Header
-     * Cart counts are now updated via WooCommerce fragments (see functions.php)
-     * This function provides a fallback and handles visibility
+     * Header badges are updated via AJAX only on cart events (not on page load)
+     * This prevents flash from stale WooCommerce fragment cache
      */
     function updateCartCount() {
-        // WooCommerce fragments handle the update automatically
-        // This listener ensures visibility is correct after fragment replacement
-        $(document.body).on('wc_fragments_refreshed wc_fragments_loaded', function() {
-            // Fragments already replaced the elements, just ensure they exist
-            $('.cart-count-desktop, .cart-count-mobile').each(function() {
-                const $badge = $(this);
-                const count = parseInt($badge.text()) || 0;
-                if (count > 0) {
-                    $badge.removeClass('hidden');
-                } else {
-                    $badge.addClass('hidden');
+        // Function to fetch and update cart count
+        function refreshHeaderCartCount() {
+            $.ajax({
+                url: infinityAjax.ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'infinity_get_cart_count'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        var count = parseInt(response.data.count) || 0;
+                        // Update desktop badge
+                        var $desktop = $('.cart-count-desktop');
+                        $desktop.text(count);
+                        if (count > 0) {
+                            $desktop.removeClass('hidden');
+                        } else {
+                            $desktop.addClass('hidden');
+                        }
+                        // Update mobile badge
+                        var $mobile = $('.cart-count-mobile');
+                        $mobile.text(count);
+                        if (count > 0) {
+                            $mobile.removeClass('hidden');
+                        } else {
+                            $mobile.addClass('hidden');
+                        }
+                    }
                 }
             });
+        }
+
+        // Listen for cart events and update badges
+        $(document.body).on('added_to_cart removed_from_cart updated_cart_totals wc_fragments_refreshed', function() {
+            refreshHeaderCartCount();
         });
     }
 
