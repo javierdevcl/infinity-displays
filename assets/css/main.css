@@ -1317,7 +1317,6 @@ button {
 /* General button resets */
 .infinity-quote-btn {
     cursor: pointer;
-    border: none !important;
 }
 
 /* Make sure all buttons with bg colors have no border */
@@ -2360,18 +2359,19 @@ textarea::placeholder {
 /* Border with opacity */
 .border-border\/50 { border-color: rgba(229, 231, 235, 0.5); }
 .border-primary\/20 { border-color: rgba(0, 168, 204, 0.2); }
+.border-primary\/30 { border-color: rgba(0, 168, 204, 0.3); }
 .border-primary\/50 { border-color: rgba(0, 168, 204, 0.5); }
 .border-primary\/70 { border-color: rgba(0, 168, 204, 0.7); }
 .border-white\/20 { border-color: rgba(255, 255, 255, 0.2); }
 .hover\:border-primary\/50:hover { border-color: rgba(0, 168, 204, 0.5); }
 .hover\:border-primary\/70:hover { border-color: rgba(0, 168, 204, 0.7); }
 
-/* Secondary color with opacity */
-.bg-secondary\/10 { background-color: rgba(249, 115, 22, 0.1); }
-.bg-secondary\/20 { background-color: rgba(249, 115, 22, 0.2); }
-.bg-secondary\/30 { background-color: rgba(249, 115, 22, 0.3); }
-.bg-secondary\/50 { background-color: rgba(249, 115, 22, 0.5); }
-.hover\:bg-secondary\/10:hover { background-color: rgba(249, 115, 22, 0.1); }
+/* Secondary color with opacity (gray - brand color) */
+.bg-secondary\/10 { background-color: rgba(226, 232, 240, 0.1); }
+.bg-secondary\/20 { background-color: rgba(226, 232, 240, 0.2); }
+.bg-secondary\/30 { background-color: rgba(226, 232, 240, 0.3); }
+.bg-secondary\/50 { background-color: rgba(226, 232, 240, 0.5); }
+.hover\:bg-secondary\/10:hover { background-color: rgba(226, 232, 240, 0.1); }
 
 /* Black with opacity */
 .bg-black\/30 { background-color: rgba(0, 0, 0, 0.3); }
