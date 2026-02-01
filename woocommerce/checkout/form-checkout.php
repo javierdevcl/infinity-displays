@@ -7,6 +7,9 @@
 
 defined('ABSPATH') || exit;
 
+// Use minimal checkout header
+get_header('checkout');
+
 // If checkout registration is disabled and not logged in, the user cannot checkout.
 if (!$checkout->is_registration_enabled() && $checkout->is_registration_required() && !is_user_logged_in()) {
     echo '<div class="min-h-screen flex items-center justify-center bg-gray-50">';
@@ -16,6 +19,7 @@ if (!$checkout->is_registration_enabled() && $checkout->is_registration_required
     echo '<p class="text-gray-600 mb-4">Debes iniciar sesión para completar tu compra.</p>';
     echo '<a href="' . esc_url(wc_get_page_permalink('myaccount')) . '" class="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90">Iniciar Sesión</a>';
     echo '</div></div>';
+    get_footer('checkout');
     return;
 }
 
@@ -24,37 +28,10 @@ $cart_count = WC()->cart->get_cart_contents_count();
 $cart_total = WC()->cart->get_total();
 ?>
 
-<div class="checkout-shopify bg-gray-50 min-h-screen">
+<div class="checkout-shopify bg-gray-50 min-h-screen flex flex-col">
     <?php do_action('woocommerce_before_checkout_form', $checkout); ?>
 
-    <!-- Checkout Header -->
-    <header class="checkout-header bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <!-- Logo -->
-                <a href="<?php echo home_url(); ?>" class="flex items-center">
-                    <?php
-                    $custom_logo_id = get_theme_mod('custom_logo');
-                    if ($custom_logo_id) {
-                        echo wp_get_attachment_image($custom_logo_id, 'medium', false, array('class' => 'h-8 w-auto'));
-                    } else {
-                        echo '<span class="text-xl font-bold text-gray-900">' . get_bloginfo('name') . '</span>';
-                    }
-                    ?>
-                </a>
-
-                <!-- Security Badge -->
-                <div class="hidden sm:flex items-center gap-2 text-sm text-gray-500">
-                    <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>Pago 100% Seguro</span>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <form name="checkout" method="post" class="checkout woocommerce-checkout" action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
+    <form name="checkout" method="post" class="checkout woocommerce-checkout flex-1" action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
 
         <div class="max-w-7xl mx-auto px-4 py-8">
             <div class="lg:grid lg:grid-cols-12 lg:gap-12">
@@ -249,20 +226,6 @@ $cart_total = WC()->cart->get_total();
     </form>
 
     <?php do_action('woocommerce_after_checkout_form', $checkout); ?>
-
-    <!-- Footer -->
-    <footer class="checkout-footer border-t border-gray-200 bg-white mt-8">
-        <div class="max-w-7xl mx-auto px-4 py-6">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-                <div class="flex items-center gap-4">
-                    <a href="<?php echo home_url(); ?>" class="hover:text-primary">Volver a la tienda</a>
-                    <span class="text-gray-300">|</span>
-                    <a href="<?php echo get_privacy_policy_url(); ?>" class="hover:text-primary">Política de Privacidad</a>
-                </div>
-                <div>
-                    &copy; <?php echo date('Y'); ?> <?php echo get_bloginfo('name'); ?>. Todos los derechos reservados.
-                </div>
-            </div>
-        </div>
-    </footer>
 </div>
+
+<?php get_footer('checkout'); ?>
