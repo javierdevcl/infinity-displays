@@ -24,7 +24,7 @@ if (!$video_stories->have_posts()) {
         <?php while ($video_stories->have_posts()): $video_stories->the_post();
             $video_url = get_post_meta(get_the_ID(), '_video_youtube_url', true);
             $label = get_post_meta(get_the_ID(), '_video_label', true);
-            $thumbnail = get_the_post_thumbnail_url(get_the_ID(), 'medium');
+            $thumbnail = get_the_post_thumbnail_url(get_the_ID(), 'infinity-video-story');
 
             if (!$video_url) continue;
         ?>

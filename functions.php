@@ -43,6 +43,7 @@ function infinity_theme_setup() {
     // Image sizes for products
     add_image_size('infinity-product-thumb', 400, 400, true);
     add_image_size('infinity-product-large', 800, 800, true);
+    add_image_size('infinity-video-story', 100, 100, true); // Video stories circular thumbnails
 }
 add_action('after_setup_theme', 'infinity_theme_setup');
 
