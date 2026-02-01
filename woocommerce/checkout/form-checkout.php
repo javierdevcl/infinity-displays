@@ -30,10 +30,10 @@ $cart_total = WC()->cart->get_total();
     <form name="checkout" method="post" class="checkout woocommerce-checkout flex-1" action="<?php echo esc_url(wc_get_checkout_url()); ?>" enctype="multipart/form-data">
 
         <div class="max-w-7xl mx-auto px-4 py-8">
-            <div class="lg:grid lg:grid-cols-12 lg:gap-12">
+            <div class="checkout-grid">
 
                 <!-- Left Column - Form -->
-                <div class="lg:col-span-7">
+                <div class="checkout-main">
 
                     <?php if ($checkout->get_checkout_fields()): ?>
 
@@ -120,10 +120,10 @@ $cart_total = WC()->cart->get_total();
                 </div>
 
                 <!-- Right Column - Order Summary -->
-                <div class="lg:col-span-5 mt-8 lg:mt-0">
-                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden lg:sticky lg:top-24">
+                <div class="checkout-sidebar">
+                    <div class="checkout-sidebar-inner bg-white rounded-lg border border-gray-200 overflow-hidden">
                         <!-- Mobile Toggle -->
-                        <button type="button" class="lg:hidden w-full px-6 py-4 flex items-center justify-between border-b border-gray-200 bg-gray-50" onclick="this.closest('.bg-white').querySelector('.order-summary-content').classList.toggle('hidden')">
+                        <button type="button" class="checkout-mobile-toggle w-full px-6 py-4 flex items-center justify-between border-b border-gray-200 bg-gray-50" onclick="this.closest('.bg-white').querySelector('.order-summary-content').classList.toggle('hidden')">
                             <span class="flex items-center gap-2 font-medium text-gray-900">
                                 <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
