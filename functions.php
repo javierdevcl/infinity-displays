@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Theme constants
-define('INFINITY_VERSION', '2.2.0');
+define('INFINITY_VERSION', '2.3.0');
 define('INFINITY_THEME_DIR', get_template_directory());
 define('INFINITY_THEME_URI', get_template_directory_uri());
 
@@ -113,6 +113,10 @@ function infinity_enqueue_scripts() {
     // Google Fonts
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap', array(), null);
 
+    // Plyr Video Player
+    wp_enqueue_style('plyr', 'https://cdn.plyr.io/3.7.8/plyr.css', array(), '3.7.8');
+    wp_enqueue_script('plyr', 'https://cdn.plyr.io/3.7.8/plyr.polyfilled.js', array(), '3.7.8', true);
+
     // Force WooCommerce scripts to load on all pages (needed for AJAX cart)
     if (class_exists('WooCommerce')) {
         wp_enqueue_script('wc-cart-fragments');
@@ -122,7 +126,7 @@ function infinity_enqueue_scripts() {
     // Theme scripts
     wp_enqueue_script('infinity-main', INFINITY_THEME_URI . '/assets/js/main.js', array('jquery'), INFINITY_VERSION, true);
     wp_enqueue_script('infinity-quote-modal', INFINITY_THEME_URI . '/assets/js/quote-modal.js', array(), INFINITY_VERSION, true);
-    wp_enqueue_script('infinity-video-lightbox', INFINITY_THEME_URI . '/assets/js/video-lightbox.js', array(), INFINITY_VERSION, true);
+    wp_enqueue_script('infinity-video-lightbox', INFINITY_THEME_URI . '/assets/js/video-lightbox.js', array('plyr'), INFINITY_VERSION, true);
     wp_enqueue_script('infinity-side-cart', INFINITY_THEME_URI . '/assets/js/side-cart.js', array('jquery', 'wc-add-to-cart'), INFINITY_VERSION, true);
 
     // Localize script for AJAX
