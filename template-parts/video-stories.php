@@ -28,7 +28,7 @@ if (!$video_stories->have_posts()) {
 
             if (!$video_url) continue;
 
-            // Extract YouTube video ID
+            // Extract YouTube video ID (supports regular videos and Shorts)
             $video_id = '';
             if (preg_match('/youtube\.com\/watch\?v=([^&]+)/', $video_url, $matches)) {
                 $video_id = $matches[1];
@@ -36,7 +36,12 @@ if (!$video_stories->have_posts()) {
                 $video_id = $matches[1];
             } elseif (preg_match('/youtube\.com\/embed\/([^?]+)/', $video_url, $matches)) {
                 $video_id = $matches[1];
+            } elseif (preg_match('/youtube\.com\/shorts\/([^?]+)/', $video_url, $matches)) {
+                $video_id = $matches[1]; // YouTube Shorts
             }
+
+            // Skip if no valid video ID
+            if (empty($video_id)) continue;
         ?>
         <div class="flex flex-col items-center gap-2 cursor-pointer story-item"
              data-video-id="<?php echo esc_attr($video_id); ?>"
