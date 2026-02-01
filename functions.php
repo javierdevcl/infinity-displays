@@ -48,6 +48,20 @@ function infinity_theme_setup() {
 add_action('after_setup_theme', 'infinity_theme_setup');
 
 /**
+ * Use minimal checkout template for WooCommerce checkout page
+ */
+function infinity_checkout_template($template) {
+    if (is_checkout() && !is_wc_endpoint_url()) {
+        $checkout_template = locate_template('page-checkout.php');
+        if ($checkout_template) {
+            return $checkout_template;
+        }
+    }
+    return $template;
+}
+add_filter('template_include', 'infinity_checkout_template', 99);
+
+/**
  * Custom Walker for Mobile Menu
  * Generates flat HTML structure for JavaScript-driven drill-down navigation
  */

@@ -7,9 +7,6 @@
 
 defined('ABSPATH') || exit;
 
-// Use minimal checkout header
-get_header('checkout');
-
 // If checkout registration is disabled and not logged in, the user cannot checkout.
 if (!$checkout->is_registration_enabled() && $checkout->is_registration_required() && !is_user_logged_in()) {
     echo '<div class="min-h-screen flex items-center justify-center bg-gray-50">';
@@ -19,7 +16,6 @@ if (!$checkout->is_registration_enabled() && $checkout->is_registration_required
     echo '<p class="text-gray-600 mb-4">Debes iniciar sesión para completar tu compra.</p>';
     echo '<a href="' . esc_url(wc_get_page_permalink('myaccount')) . '" class="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90">Iniciar Sesión</a>';
     echo '</div></div>';
-    get_footer('checkout');
     return;
 }
 
@@ -227,5 +223,3 @@ $cart_total = WC()->cart->get_total();
 
     <?php do_action('woocommerce_after_checkout_form', $checkout); ?>
 </div>
-
-<?php get_footer('checkout'); ?>
