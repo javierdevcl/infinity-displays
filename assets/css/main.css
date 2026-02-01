@@ -389,6 +389,54 @@ header .custom-logo {
 }
 
 /* ========================================
+   HERO SLIDER
+   ======================================== */
+.hero-slider {
+    position: relative;
+}
+
+.hero-slides {
+    position: relative;
+    min-height: 300px;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.hero-slide.active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+}
+
+.hero-prev,
+.hero-next {
+    opacity: 0.7;
+}
+
+.hero-prev:hover,
+.hero-next:hover {
+    opacity: 1;
+}
+
+.hero-dot {
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 1023px) {
+    .hero-slides {
+        min-height: auto;
+    }
+}
+
+/* ========================================
    TYPOGRAPHY
    ======================================== */
 .font-sans { font-family: 'Outfit', -apple-system, sans-serif; }
@@ -2814,51 +2862,59 @@ body.mobile-menu-open {
 }
 
 /* ========================================
-   STICKY ACTION BUTTONS (Mobile Single Product)
+   ACTION BUTTONS (Single Product)
    ======================================== */
-@media (max-width: 767px) {
-    #product-action-buttons {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-        transition: all 0.3s ease;
-    }
+#product-action-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+}
 
+#product-action-buttons form,
+#product-action-buttons a {
+    margin: 0;
+}
+
+#product-action-buttons form button {
+    width: 100%;
+}
+
+/* Mobile Sticky Buttons */
+@media (max-width: 767px) {
     #product-action-buttons.is-sticky {
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        z-index: 100;
+        z-index: 50;
         background-color: #ffffff;
         border-top: 1px solid #e5e7eb;
-        box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
         padding: 1rem;
-        margin-bottom: 0 !important;
-    }
-
-    #product-action-buttons form,
-    #product-action-buttons a {
         margin: 0;
+        animation: slideUp 0.2s ease-out;
     }
 
-    #product-action-buttons button,
-    #product-action-buttons a {
+    @keyframes slideUp {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    #product-action-buttons.is-sticky button,
+    #product-action-buttons.is-sticky a {
         padding: 0.875rem 1rem;
         font-size: 0.875rem;
     }
 
-    #product-action-buttons button svg,
-    #product-action-buttons a svg {
-        width: 1rem;
-        height: 1rem;
-        margin-right: 0.375rem;
-    }
-
-    /* Add padding to bottom of page to prevent content being hidden */
-    .single-product .product,
-    .single-product article.product {
-        padding-bottom: 7rem;
+    #product-action-buttons.is-sticky svg {
+        width: 1.125rem;
+        height: 1.125rem;
     }
 }
 
