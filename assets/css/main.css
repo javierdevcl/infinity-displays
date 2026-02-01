@@ -389,6 +389,54 @@ header .custom-logo {
 }
 
 /* ========================================
+   HERO SLIDER
+   ======================================== */
+.hero-slider {
+    position: relative;
+}
+
+.hero-slides {
+    position: relative;
+    min-height: 300px;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.hero-slide.active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+}
+
+.hero-prev,
+.hero-next {
+    opacity: 0.7;
+}
+
+.hero-prev:hover,
+.hero-next:hover {
+    opacity: 1;
+}
+
+.hero-dot {
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 1023px) {
+    .hero-slides {
+        min-height: auto;
+    }
+}
+
+/* ========================================
    TYPOGRAPHY
    ======================================== */
 .font-sans { font-family: 'Outfit', -apple-system, sans-serif; }

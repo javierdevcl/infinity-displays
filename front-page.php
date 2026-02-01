@@ -8,86 +8,224 @@
 get_header();
 ?>
 
-<!-- Hero Banner -->
-<section class="relative bg-gradient-to-r from-primary to-primary/80 overflow-hidden">
-    <div class="container mx-auto px-4 py-8">
-        <div class="flex flex-col lg:flex-row items-center gap-8">
-            <!-- Content -->
-            <div class="flex-1 z-10">
-                <h1 class="text-3xl lg:text-5xl font-display font-bold text-white mb-3">
-                    Pop-Up Displays
-                </h1>
-                <p class="text-white/90 text-lg mb-6">
-                    El sistema profesional para ferias y eventos
-                </p>
-                <ul class="space-y-2 text-white/80 text-sm mb-6">
-                    <li class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        Nuevos tamaños disponibles
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        Sistema magnético mejorado
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-                        </svg>
-                        Ahora modular y conectable
-                    </li>
-                </ul>
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                    <button onclick="openQuoteModal()" class="infinity-quote-btn inline-flex items-center px-6 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-colors">
-                        Solicitar Cotización
-                    </button>
-                    <div class="text-white">
-                        <div class="text-sm opacity-80">Desde</div>
-                        <div class="text-3xl font-bold">$145.000</div>
-                        <div class="text-sm opacity-60 line-through">$245.000</div>
+<!-- Hero Banner with Featured Products Slider -->
+<?php
+// Get featured products (up to 5)
+$featured_args = array(
+    'post_type' => 'product',
+    'posts_per_page' => 5,
+    'meta_query' => array(
+        array(
+            'key' => '_featured',
+            'value' => 'yes',
+        )
+    ),
+);
+$featured_products = new WP_Query($featured_args);
+
+// Fallback to recent products if no featured
+if (!$featured_products->have_posts()) {
+    $featured_args = array(
+        'post_type' => 'product',
+        'posts_per_page' => 5,
+        'orderby' => 'date',
+        'order' => 'DESC',
+    );
+    $featured_products = new WP_Query($featured_args);
+}
+
+$slides = array();
+if ($featured_products->have_posts()):
+    while ($featured_products->have_posts()): $featured_products->the_post();
+        global $product;
+        $pricing = infinity_get_volume_pricing($product->get_id());
+        $price = !empty($pricing['retail']) ? $pricing['retail'] : $product->get_price();
+
+        $slides[] = array(
+            'id' => $product->get_id(),
+            'name' => $product->get_name(),
+            'price' => $price,
+            'image' => get_the_post_thumbnail_url(get_the_ID(), 'large'),
+            'link' => get_permalink(),
+            'category' => strip_tags(wc_get_product_category_list($product->get_id())),
+        );
+    endwhile;
+    wp_reset_postdata();
+endif;
+
+$slide_count = count($slides);
+?>
+
+<section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-primary/30 overflow-hidden">
+    <div class="container mx-auto px-4 py-8 lg:py-12">
+        <?php if ($slide_count > 0): ?>
+        <div class="hero-slider relative" data-slide-count="<?php echo $slide_count; ?>">
+            <!-- Slides Container -->
+            <div class="hero-slides">
+                <?php foreach ($slides as $index => $slide): ?>
+                <div class="hero-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
+                    <div class="flex flex-col lg:flex-row items-center gap-6 lg:gap-12">
+                        <!-- Content -->
+                        <div class="flex-1 z-10 text-center lg:text-left">
+                            <?php if ($slide['category']): ?>
+                            <span class="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium mb-3">
+                                <?php echo esc_html($slide['category']); ?>
+                            </span>
+                            <?php endif; ?>
+
+                            <h2 class="text-2xl lg:text-4xl font-display font-bold text-white mb-3">
+                                <?php echo esc_html($slide['name']); ?>
+                            </h2>
+
+                            <div class="flex flex-col sm:flex-row items-center lg:items-start gap-4 mb-6">
+                                <div class="text-white">
+                                    <div class="text-sm opacity-80">Precio Base</div>
+                                    <div class="text-3xl lg:text-4xl font-bold text-primary">$<?php echo number_format($slide['price'], 0, ',', '.'); ?></div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row items-center lg:items-start gap-3">
+                                <a href="<?php echo esc_url($slide['link']); ?>" class="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-colors">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                    Ver Producto
+                                </a>
+                                <button onclick="openQuoteModal()" class="inline-flex items-center px-6 py-3 bg-white/10 text-white font-semibold rounded-lg hover:bg-white/20 transition-colors border border-white/20">
+                                    Cotizar
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Product Image -->
+                        <div class="flex-1 relative">
+                            <a href="<?php echo esc_url($slide['link']); ?>" class="block aspect-square max-w-sm mx-auto">
+                                <?php if ($slide['image']): ?>
+                                <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['name']); ?>" class="w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-300">
+                                <?php else: ?>
+                                <div class="w-full h-full bg-white/10 rounded-2xl flex items-center justify-center">
+                                    <span class="text-white/50 text-lg">Imagen de producto</span>
+                                </div>
+                                <?php endif; ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                <?php endforeach; ?>
             </div>
 
-            <!-- Hero Image -->
-            <div class="flex-1 relative">
-                <div class="aspect-square max-w-md mx-auto">
-                    <?php
-                    // Get featured product or first product for hero image
-                    $featured_args = array(
-                        'post_type' => 'product',
-                        'posts_per_page' => 1,
-                        'meta_key' => '_featured',
-                        'meta_value' => 'yes',
-                    );
-                    $featured_product = new WP_Query($featured_args);
+            <?php if ($slide_count > 1): ?>
+            <!-- Navigation Arrows -->
+            <button class="hero-prev absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-20 hidden lg:flex">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <button class="hero-next absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-20 hidden lg:flex">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
 
-                    if ($featured_product->have_posts()):
-                        $featured_product->the_post();
-                        if (has_post_thumbnail()):
-                    ?>
-                        <?php the_post_thumbnail('large', array('class' => 'w-full h-full object-contain drop-shadow-2xl')); ?>
-                    <?php
-                        else:
-                    ?>
-                        <div class="w-full h-full bg-white/10 rounded-2xl flex items-center justify-center">
-                            <span class="text-white/50 text-lg">Imagen de producto</span>
-                        </div>
-                    <?php
-                        endif;
-                        wp_reset_postdata();
-                    else:
-                    ?>
-                        <div class="w-full h-full bg-white/10 rounded-2xl flex items-center justify-center">
-                            <span class="text-white/50 text-lg">Imagen de producto</span>
-                        </div>
-                    <?php endif; ?>
-                </div>
+            <!-- Dots Navigation -->
+            <div class="hero-dots flex justify-center gap-2 mt-6">
+                <?php for ($i = 0; $i < $slide_count; $i++): ?>
+                <button class="hero-dot w-2.5 h-2.5 rounded-full transition-all <?php echo $i === 0 ? 'bg-primary w-8' : 'bg-white/30 hover:bg-white/50'; ?>" data-index="<?php echo $i; ?>"></button>
+                <?php endfor; ?>
             </div>
+            <?php endif; ?>
         </div>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.hero-slider');
+            if (!slider) return;
+
+            const slides = slider.querySelectorAll('.hero-slide');
+            const dots = slider.querySelectorAll('.hero-dot');
+            const prevBtn = slider.querySelector('.hero-prev');
+            const nextBtn = slider.querySelector('.hero-next');
+            const slideCount = parseInt(slider.dataset.slideCount);
+
+            if (slideCount <= 1) return;
+
+            let currentSlide = 0;
+            let autoplayInterval;
+
+            function showSlide(index) {
+                // Wrap around
+                if (index >= slideCount) index = 0;
+                if (index < 0) index = slideCount - 1;
+
+                // Update slides
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+
+                // Update dots
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('bg-primary', i === index);
+                    dot.classList.toggle('w-8', i === index);
+                    dot.classList.toggle('bg-white/30', i !== index);
+                    dot.classList.toggle('w-2.5', i !== index);
+                });
+
+                currentSlide = index;
+            }
+
+            function nextSlide() {
+                showSlide(currentSlide + 1);
+            }
+
+            function prevSlide() {
+                showSlide(currentSlide - 1);
+            }
+
+            function startAutoplay() {
+                autoplayInterval = setInterval(nextSlide, 5000);
+            }
+
+            function stopAutoplay() {
+                clearInterval(autoplayInterval);
+            }
+
+            // Event listeners
+            if (prevBtn) prevBtn.addEventListener('click', function() { stopAutoplay(); prevSlide(); startAutoplay(); });
+            if (nextBtn) nextBtn.addEventListener('click', function() { stopAutoplay(); nextSlide(); startAutoplay(); });
+
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', function() {
+                    stopAutoplay();
+                    showSlide(i);
+                    startAutoplay();
+                });
+            });
+
+            // Touch/swipe support
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            slider.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+                stopAutoplay();
+            }, { passive: true });
+
+            slider.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) nextSlide();
+                    else prevSlide();
+                }
+                startAutoplay();
+            }, { passive: true });
+
+            // Start autoplay
+            startAutoplay();
+        });
+        </script>
+        <?php endif; ?>
     </div>
 </section>
 
