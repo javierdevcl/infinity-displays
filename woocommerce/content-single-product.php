@@ -286,6 +286,9 @@ $bulk_price = !empty($pricing['bulk']) ? $pricing['bulk'] : '';
                 </div>
             </div>
 
+            <!-- Action Buttons Sentinel (for sticky detection) -->
+            <div id="product-buttons-sentinel" class="h-0"></div>
+
             <!-- Action Buttons -->
             <div id="product-action-buttons" class="grid grid-cols-1 gap-3 mb-8">
                 <!-- Add to Cart Form -->
@@ -538,5 +541,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize
     updatePrice();
+
+    // Sticky buttons for mobile using sentinel element
+    function initStickyButtons() {
+        const sentinel = document.getElementById('product-buttons-sentinel');
+        const actionButtons = document.getElementById('product-action-buttons');
+
+        if (!sentinel || !actionButtons) return;
+
+        // Only for mobile
+        if (window.innerWidth > 767) {
+            actionButtons.classList.remove('is-sticky');
+            return;
+        }
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    // Sentinel is visible = buttons in normal position
+                    actionButtons.classList.remove('is-sticky');
+                } else {
+                    // Sentinel not visible = show sticky buttons
+                    actionButtons.classList.add('is-sticky');
+                }
+            });
+        }, {
+            threshold: 0,
+            rootMargin: '-100px 0px 0px 0px' // Trigger a bit before reaching the top
+        });
+
+        observer.observe(sentinel);
+    }
+
+    initStickyButtons();
+
+    // Reinit on resize with debounce
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(initStickyButtons, 150);
+    });
 });
 </script>
