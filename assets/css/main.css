@@ -44,6 +44,12 @@ body.woocommerce-page .page {
     padding-top: 0;
 }
 
+/* Sin padding para checkout (usa header minimalista) */
+body.woocommerce-checkout,
+body.checkout-page {
+    padding-top: 0 !important;
+}
+
 /* Ajuste de padding para móvil (header más pequeño + buscador) */
 @media (max-width: 767px) {
     body.home {
