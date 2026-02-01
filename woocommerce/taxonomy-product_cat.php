@@ -62,7 +62,7 @@ $product_count = $term->count;
         </div>
 
         <!-- Products Grid -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             <?php
             while (have_posts()):
                 the_post();

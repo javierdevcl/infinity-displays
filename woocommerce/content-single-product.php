@@ -77,11 +77,11 @@ $bulk_price = !empty($pricing['bulk']) ? $pricing['bulk'] : '';
                     <?php foreach ($attachment_ids as $index => $attachment_id):
                         $thumbnail_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
                         $large_url = wp_get_attachment_image_url($attachment_id, 'large');
-                        $is_active = ($index === 0) ? 'ring-2 ring-primary' : 'ring-1 ring-gray-200';
+                        $is_active = ($index === 0) ? 'border-2 border-primary' : 'border border-gray-200';
                     ?>
                         <button
                             type="button"
-                            class="product-thumbnail flex-shrink-0 w-20 h-20 bg-white rounded-lg overflow-hidden <?php echo $is_active; ?> hover:ring-2 hover:ring-primary transition-all"
+                            class="product-thumbnail flex-shrink-0 w-20 h-20 bg-white rounded-lg overflow-hidden <?php echo $is_active; ?> hover:border-primary hover:border-2 transition-all"
                             data-large-image="<?php echo esc_url($large_url); ?>"
                             data-image-id="<?php echo esc_attr($attachment_id); ?>"
                             onclick="changeProductImage(this)">
@@ -100,11 +100,11 @@ $bulk_price = !empty($pricing['bulk']) ? $pricing['bulk'] : '';
 
                     // Update active state
                     document.querySelectorAll('.product-thumbnail').forEach(thumb => {
-                        thumb.classList.remove('ring-2', 'ring-primary');
-                        thumb.classList.add('ring-1', 'ring-gray-200');
+                        thumb.classList.remove('border-2', 'border-primary');
+                        thumb.classList.add('border', 'border-gray-200');
                     });
-                    thumbnail.classList.remove('ring-1', 'ring-gray-200');
-                    thumbnail.classList.add('ring-2', 'ring-primary');
+                    thumbnail.classList.remove('border', 'border-gray-200');
+                    thumbnail.classList.add('border-2', 'border-primary');
                 }
                 </script>
             <?php endif; ?>
@@ -391,7 +391,7 @@ $bulk_price = !empty($pricing['bulk']) ? $pricing['bulk'] : '';
     ?>
         <div class="mt-12">
             <h2 class="text-2xl font-display font-bold text-foreground mb-6">Productos Relacionados</h2>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
                 <?php
                 foreach ($related_products as $related_id):
                     $post_object = get_post($related_id);
@@ -542,7 +542,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize
     updatePrice();
 
-    // Sticky buttons for mobile using sentinel element
+    // Sticky buttons for mobile - only show when buttons are scrolled out of view at TOP
     function initStickyButtons() {
         const sentinel = document.getElementById('product-buttons-sentinel');
         const actionButtons = document.getElementById('product-action-buttons');
@@ -555,22 +555,51 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    // Sentinel is visible = buttons in normal position
-                    actionButtons.classList.remove('is-sticky');
+        // Track if we should show sticky (only when scrolled past buttons, not when way below)
+        let lastScrollY = window.scrollY;
+        let stickyEnabled = false;
+
+        function checkStickyState() {
+            const sentinelRect = sentinel.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+
+            // Sentinel is above viewport (scrolled past it) - show sticky
+            if (sentinelRect.bottom < 100) {
+                // But only if we're not too far down (within 2x viewport from sentinel)
+                const distanceFromSentinel = Math.abs(sentinelRect.bottom);
+                if (distanceFromSentinel < viewportHeight * 2) {
+                    if (!stickyEnabled) {
+                        actionButtons.classList.add('is-sticky');
+                        stickyEnabled = true;
+                    }
                 } else {
-                    // Sentinel not visible = show sticky buttons
-                    actionButtons.classList.add('is-sticky');
+                    // Too far down, hide sticky
+                    actionButtons.classList.remove('is-sticky');
+                    stickyEnabled = false;
                 }
-            });
-        }, {
-            threshold: 0,
-            rootMargin: '-100px 0px 0px 0px' // Trigger a bit before reaching the top
+            } else {
+                // Sentinel visible or below viewport
+                actionButtons.classList.remove('is-sticky');
+                stickyEnabled = false;
+            }
+
+            lastScrollY = window.scrollY;
+        }
+
+        // Check on scroll with throttle
+        let ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    checkStickyState();
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
 
-        observer.observe(sentinel);
+        // Initial check
+        checkStickyState();
     }
 
     initStickyButtons();
