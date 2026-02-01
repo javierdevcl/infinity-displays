@@ -3545,3 +3545,572 @@ form.checkout {
         margin-bottom: 2rem;
     }
 }
+
+/* ==========================================================================
+   SHOPIFY-STYLE CHECKOUT
+   ========================================================================== */
+
+.checkout-shopify {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Checkout Header */
+.checkout-shopify .checkout-header {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+/* Form Fields - Shopify Style */
+.checkout-shopify input[type="text"],
+.checkout-shopify input[type="email"],
+.checkout-shopify input[type="tel"],
+.checkout-shopify input[type="password"],
+.checkout-shopify input[type="number"],
+.checkout-shopify textarea,
+.checkout-shopify select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #1f2937;
+    background-color: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.checkout-shopify input:focus,
+.checkout-shopify textarea:focus,
+.checkout-shopify select:focus {
+    outline: none;
+    border-color: #00A8CC;
+    box-shadow: 0 0 0 3px rgba(0, 168, 204, 0.1);
+}
+
+.checkout-shopify input::placeholder,
+.checkout-shopify textarea::placeholder {
+    color: #9ca3af;
+}
+
+/* Labels */
+.checkout-shopify label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.checkout-shopify label abbr {
+    color: #ef4444;
+    text-decoration: none;
+}
+
+/* Field Wrappers */
+.checkout-shopify .form-row {
+    margin-bottom: 1rem;
+}
+
+.checkout-shopify .form-row-first,
+.checkout-shopify .form-row-last {
+    width: 100%;
+}
+
+@media (min-width: 640px) {
+    .checkout-shopify .form-row-first,
+    .checkout-shopify .form-row-last {
+        width: calc(50% - 0.5rem);
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .checkout-shopify .form-row-first {
+        margin-right: 0.5rem;
+    }
+
+    .checkout-shopify .form-row-last {
+        margin-left: 0.5rem;
+    }
+}
+
+/* Select2 Override for Country/State */
+.checkout-shopify .select2-container {
+    width: 100% !important;
+}
+
+.checkout-shopify .select2-container--default .select2-selection--single {
+    height: auto;
+    padding: 0.875rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+}
+
+.checkout-shopify .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 1.5;
+    padding-left: 0;
+    color: #1f2937;
+}
+
+.checkout-shopify .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+    right: 0.75rem;
+}
+
+.checkout-shopify .select2-container--default.select2-container--focus .select2-selection--single {
+    border-color: #00A8CC;
+    box-shadow: 0 0 0 3px rgba(0, 168, 204, 0.1);
+}
+
+/* Express Checkout */
+.checkout-shopify .express-checkout {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 1px solid #bbf7d0;
+}
+
+/* Divider */
+.checkout-shopify .checkout-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.checkout-shopify .checkout-divider::before,
+.checkout-shopify .checkout-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.checkout-shopify .checkout-divider span {
+    padding: 0 1rem;
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Order Summary */
+.checkout-shopify .order-summary-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.checkout-shopify .order-summary-content.expanded,
+.checkout-shopify .order-summary-content:not(.hidden) {
+    max-height: 2000px;
+}
+
+@media (min-width: 1024px) {
+    .checkout-shopify .order-summary-content {
+        max-height: none !important;
+        overflow: visible;
+    }
+}
+
+/* Product Items in Order Summary */
+.checkout-shopify .order-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.checkout-shopify .order-item:last-child {
+    border-bottom: none;
+}
+
+.checkout-shopify .order-item-image {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.checkout-shopify .order-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.checkout-shopify .order-item-quantity {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    background: #6b7280;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Order Totals */
+.checkout-shopify .order-totals {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+.checkout-shopify .order-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.checkout-shopify .order-total-row.total {
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Coupon Form */
+.checkout-shopify .coupon-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.checkout-shopify .coupon-form input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+}
+
+.checkout-shopify .coupon-form button {
+    padding: 0.75rem 1.5rem;
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.checkout-shopify .coupon-form button:hover {
+    background: #e5e7eb;
+}
+
+/* Payment Methods */
+.checkout-shopify .wc_payment_methods {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.checkout-shopify .wc_payment_method {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+}
+
+.checkout-shopify .wc_payment_method:hover {
+    border-color: #00A8CC;
+}
+
+.checkout-shopify .wc_payment_method.payment_method_active,
+.checkout-shopify .wc_payment_method input:checked + label {
+    border-color: #00A8CC;
+    background-color: rgba(0, 168, 204, 0.02);
+}
+
+.checkout-shopify .wc_payment_method > label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    cursor: pointer;
+    margin: 0;
+    font-weight: 500;
+}
+
+.checkout-shopify .wc_payment_method input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: #00A8CC;
+}
+
+.checkout-shopify .wc_payment_method .payment_box {
+    padding: 1rem;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Place Order Button */
+.checkout-shopify #place_order {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #fff;
+    background: #00A8CC;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1.5rem;
+}
+
+.checkout-shopify #place_order:hover {
+    background: #0097b8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 168, 204, 0.3);
+}
+
+.checkout-shopify #place_order:active {
+    transform: translateY(0);
+}
+
+/* Trust Badges */
+.checkout-shopify .trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid #e5e7eb;
+    margin-top: 1.5rem;
+}
+
+.checkout-shopify .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+    font-size: 0.75rem;
+}
+
+.checkout-shopify .trust-badge svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #22c55e;
+}
+
+/* Error Messages */
+.checkout-shopify .woocommerce-error,
+.checkout-shopify .woocommerce-message,
+.checkout-shopify .woocommerce-info {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.checkout-shopify .woocommerce-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+}
+
+.checkout-shopify .woocommerce-message {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #16a34a;
+}
+
+.checkout-shopify .woocommerce-info {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #2563eb;
+}
+
+/* Checkout Footer */
+.checkout-shopify .checkout-footer {
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    padding: 2rem 0;
+    margin-top: auto;
+}
+
+.checkout-shopify .checkout-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 2rem;
+}
+
+.checkout-shopify .checkout-footer-links a {
+    color: #6b7280;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.checkout-shopify .checkout-footer-links a:hover {
+    color: #00A8CC;
+}
+
+/* Loading State */
+.checkout-shopify.processing {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.checkout-shopify.processing::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #00A8CC;
+    border-radius: 50%;
+    animation: checkout-spin 0.8s linear infinite;
+    z-index: 9999;
+}
+
+@keyframes checkout-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Hide default WooCommerce elements */
+.checkout-shopify .woocommerce-form-login-toggle,
+.checkout-shopify .woocommerce-form-coupon-toggle {
+    display: none;
+}
+
+/* Mobile Order Summary Toggle */
+.checkout-shopify .order-summary-toggle {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.checkout-shopify .order-summary-toggle:hover {
+    background: #f3f4f6;
+}
+
+.checkout-shopify .order-summary-toggle svg {
+    transition: transform 0.3s ease;
+}
+
+.checkout-shopify .order-summary-toggle.expanded svg {
+    transform: rotate(180deg);
+}
+
+@media (min-width: 1024px) {
+    .checkout-shopify .order-summary-toggle {
+        display: none;
+    }
+}
+
+/* Responsive Grid */
+@media (max-width: 1023px) {
+    .checkout-shopify .checkout-grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checkout-shopify .checkout-sidebar {
+        order: -1;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* Woocommerce Review Order Table Override */
+.checkout-shopify .woocommerce-checkout-review-order-table {
+    width: 100%;
+    border: none;
+}
+
+.checkout-shopify .woocommerce-checkout-review-order-table th,
+.checkout-shopify .woocommerce-checkout-review-order-table td {
+    padding: 0.75rem 0;
+    border: none;
+    vertical-align: middle;
+}
+
+.checkout-shopify .woocommerce-checkout-review-order-table thead {
+    display: none;
+}
+
+.checkout-shopify .woocommerce-checkout-review-order-table .cart_item td {
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.checkout-shopify .woocommerce-checkout-review-order-table .product-name {
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.checkout-shopify .woocommerce-checkout-review-order-table .product-total {
+    text-align: right;
+    font-weight: 500;
+}
+
+.checkout-shopify .woocommerce-checkout-review-order-table tfoot th {
+    text-align: left;
+    font-weight: 400;
+    color: #6b7280;
+}
+
+.checkout-shopify .woocommerce-checkout-review-order-table tfoot .order-total th,
+.checkout-shopify .woocommerce-checkout-review-order-table tfoot .order-total td {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+}
+
+/* Terms and Conditions */
+.checkout-shopify .woocommerce-terms-and-conditions-wrapper {
+    margin: 1rem 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.checkout-shopify .woocommerce-terms-and-conditions-wrapper a {
+    color: #00A8CC;
+    text-decoration: underline;
+}
+
+.checkout-shopify .woocommerce-privacy-policy-text {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 0.5rem;
+}
+
+/* Validation States */
+.checkout-shopify .woocommerce-invalid input,
+.checkout-shopify .woocommerce-invalid select {
+    border-color: #ef4444 !important;
+}
+
+.checkout-shopify .woocommerce-validated input,
+.checkout-shopify .woocommerce-validated select {
+    border-color: #22c55e !important;
+}
