@@ -6,54 +6,39 @@
  */
 
 get_header();
-?>
 
-<!-- Hero Banner with Featured Products Slider -->
-<?php
-// Get featured products (up to 5)
-$featured_args = array(
-    'post_type' => 'product',
-    'posts_per_page' => 5,
-    'meta_query' => array(
-        array(
-            'key' => '_featured',
-            'value' => 'yes',
-        )
+// Hero slides - Trust/Brand messaging
+$hero_slides = array(
+    array(
+        'title' => 'Calidad Profesional Garantizada',
+        'subtitle' => 'Productos de alta calidad para tu negocio',
+        'description' => 'Trabajamos solo con materiales premium y tecnología de punta para ofrecerte displays que impactan.',
+        'icon' => 'quality',
+        'color' => 'primary',
+    ),
+    array(
+        'title' => 'Despacho en 24 Horas',
+        'subtitle' => 'Entrega rápida en Santiago',
+        'description' => 'Pedidos antes de las 14:00 hrs se despachan el mismo día. Envíos a todo Chile.',
+        'icon' => 'shipping',
+        'color' => 'green',
+    ),
+    array(
+        'title' => 'Sala de Ventas',
+        'subtitle' => 'Visítanos y conoce nuestros productos',
+        'description' => 'Ven a nuestra sala de ventas, prueba los productos y recibe asesoría personalizada de nuestro equipo.',
+        'icon' => 'store',
+        'color' => 'blue',
+    ),
+    array(
+        'title' => 'Stock Permanente',
+        'subtitle' => 'Bodega con inventario disponible',
+        'description' => 'Mantenemos stock de todos nuestros productos para que nunca tengas que esperar.',
+        'icon' => 'warehouse',
+        'color' => 'purple',
     ),
 );
-$featured_products = new WP_Query($featured_args);
-
-// Fallback to recent products if no featured
-if (!$featured_products->have_posts()) {
-    $featured_args = array(
-        'post_type' => 'product',
-        'posts_per_page' => 5,
-        'orderby' => 'date',
-        'order' => 'DESC',
-    );
-    $featured_products = new WP_Query($featured_args);
-}
-
-$slides = array();
-if ($featured_products->have_posts()):
-    while ($featured_products->have_posts()): $featured_products->the_post();
-        global $product;
-        $pricing = infinity_get_volume_pricing($product->get_id());
-        $price = !empty($pricing['retail']) ? $pricing['retail'] : $product->get_price();
-
-        $slides[] = array(
-            'id' => $product->get_id(),
-            'name' => $product->get_name(),
-            'price' => $price,
-            'image' => get_the_post_thumbnail_url(get_the_ID(), 'large'),
-            'link' => get_permalink(),
-            'category' => strip_tags(wc_get_product_category_list($product->get_id())),
-        );
-    endwhile;
-    wp_reset_postdata();
-endif;
-
-$slide_count = count($slides);
+$slide_count = count($hero_slides);
 ?>
 
 <section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
@@ -63,74 +48,72 @@ $slide_count = count($slides);
         <div class="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-2xl"></div>
     </div>
 
-    <div class="container mx-auto px-4 py-10 lg:py-16">
-        <?php if ($slide_count > 0): ?>
+    <div class="container mx-auto px-4 py-12 lg:py-20">
         <div class="hero-slider relative" data-slide-count="<?php echo $slide_count; ?>">
             <!-- Slides Container -->
             <div class="hero-slides">
-                <?php foreach ($slides as $index => $slide): ?>
+                <?php foreach ($hero_slides as $index => $slide): ?>
                 <div class="hero-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
-                    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
 
                         <!-- Content - Left Side -->
                         <div class="flex-1 z-10 text-left order-2 lg:order-1">
-                            <?php if ($slide['category']): ?>
-                            <span class="inline-block px-4 py-1.5 bg-primary text-white rounded-full text-xs font-semibold mb-4 uppercase tracking-wide">
-                                <?php echo esc_html($slide['category']); ?>
+                            <span class="inline-block px-4 py-1.5 bg-<?php echo $slide['color']; ?>-500/20 text-<?php echo $slide['color'] === 'primary' ? 'primary' : $slide['color'] . '-400'; ?> rounded-full text-sm font-semibold mb-4 uppercase tracking-wide border border-<?php echo $slide['color'] === 'primary' ? 'primary' : $slide['color'] . '-500'; ?>/30">
+                                <?php echo esc_html($slide['subtitle']); ?>
                             </span>
-                            <?php endif; ?>
 
-                            <h2 class="text-2xl lg:text-4xl font-display font-bold text-white mb-4 leading-tight">
-                                <?php echo esc_html($slide['name']); ?>
+                            <h2 class="text-3xl lg:text-5xl font-display font-bold text-white mb-5 leading-tight">
+                                <?php echo esc_html($slide['title']); ?>
                             </h2>
 
-                            <!-- Feature highlights -->
-                            <div class="flex flex-wrap gap-4 mb-5 text-sm text-gray-300">
-                                <span class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    Envío a todo Chile
-                                </span>
-                                <span class="flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                    </svg>
-                                    Garantía incluida
-                                </span>
-                            </div>
+                            <p class="text-lg text-gray-300 mb-8 max-w-xl leading-relaxed">
+                                <?php echo esc_html($slide['description']); ?>
+                            </p>
 
-                            <div class="flex items-center gap-3 mb-6">
-                                <span class="text-gray-400">Desde</span>
-                                <span class="text-3xl lg:text-4xl font-bold text-white">$<?php echo number_format($slide['price'], 0, ',', '.'); ?></span>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="<?php echo get_permalink(wc_get_page_id('shop')); ?>" class="inline-flex items-center justify-center px-8 py-4 bg-primary text-white text-lg font-semibold rounded-xl hover:bg-primary/90 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                    </svg>
+                                    Ver Productos
+                                </a>
+                                <a href="https://wa.me/56942057591" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-white/10 text-white text-lg font-semibold rounded-xl hover:bg-white/20 transition-all border border-white/20">
+                                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                    </svg>
+                                    Contactar
+                                </a>
                             </div>
-
-                            <a href="<?php echo esc_url($slide['link']); ?>" class="inline-flex items-center justify-center px-8 py-4 bg-primary text-white text-lg font-semibold rounded-xl hover:bg-primary/90 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                </svg>
-                                Ver Producto
-                            </a>
                         </div>
 
-                        <!-- Product Image Card - Right Side -->
+                        <!-- Icon/Visual - Right Side -->
                         <div class="flex-shrink-0 order-1 lg:order-2">
-                            <a href="<?php echo esc_url($slide['link']); ?>" class="block">
-                                <div class="relative bg-white rounded-2xl shadow-2xl p-6 w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 mx-auto overflow-hidden group">
-                                    <?php if ($slide['image']): ?>
-                                    <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['name']); ?>" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
-                                    <?php else: ?>
-                                    <div class="w-full h-full bg-gray-100 rounded-xl flex items-center justify-center">
-                                        <svg class="w-20 h-20 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                        </svg>
-                                    </div>
+                            <div class="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 mx-auto">
+                                <!-- Animated background circles -->
+                                <div class="absolute inset-0 bg-<?php echo $slide['color'] === 'primary' ? 'primary' : $slide['color'] . '-500'; ?>/20 rounded-full animate-pulse"></div>
+                                <div class="absolute inset-4 bg-<?php echo $slide['color'] === 'primary' ? 'primary' : $slide['color'] . '-500'; ?>/10 rounded-full"></div>
+
+                                <!-- Icon -->
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <?php if ($slide['icon'] === 'quality'): ?>
+                                    <svg class="w-32 h-32 lg:w-40 lg:h-40 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                    </svg>
+                                    <?php elseif ($slide['icon'] === 'shipping'): ?>
+                                    <svg class="w-32 h-32 lg:w-40 lg:h-40 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
+                                    </svg>
+                                    <?php elseif ($slide['icon'] === 'store'): ?>
+                                    <svg class="w-32 h-32 lg:w-40 lg:h-40 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                    <?php elseif ($slide['icon'] === 'warehouse'): ?>
+                                    <svg class="w-32 h-32 lg:w-40 lg:h-40 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                    </svg>
                                     <?php endif; ?>
-                                    <!-- Hover overlay -->
-                                    <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors rounded-2xl"></div>
                                 </div>
-                            </a>
+                            </div>
                         </div>
 
                     </div>
@@ -138,7 +121,6 @@ $slide_count = count($slides);
                 <?php endforeach; ?>
             </div>
 
-            <?php if ($slide_count > 1): ?>
             <!-- Navigation Arrows -->
             <button class="hero-prev absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-20 hidden lg:flex">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,12 +134,11 @@ $slide_count = count($slides);
             </button>
 
             <!-- Dots Navigation -->
-            <div class="hero-dots flex justify-center gap-2 mt-8">
+            <div class="hero-dots flex justify-center gap-2 mt-10">
                 <?php for ($i = 0; $i < $slide_count; $i++): ?>
                 <button class="hero-dot w-2.5 h-2.5 rounded-full transition-all <?php echo $i === 0 ? 'bg-primary w-8' : 'bg-white/30 hover:bg-white/50'; ?>" data-index="<?php echo $i; ?>"></button>
                 <?php endfor; ?>
             </div>
-            <?php endif; ?>
         </div>
 
         <script>
@@ -186,9 +167,9 @@ $slide_count = count($slides);
 
                 dots.forEach((dot, i) => {
                     dot.classList.toggle('bg-primary', i === index);
-                    dot.classList.toggle('w-6', i === index);
+                    dot.classList.toggle('w-8', i === index);
                     dot.classList.toggle('bg-white/30', i !== index);
-                    dot.classList.toggle('w-2', i !== index);
+                    dot.classList.toggle('w-2.5', i !== index);
                 });
 
                 currentSlide = index;
@@ -218,7 +199,6 @@ $slide_count = count($slides);
             startAutoplay();
         });
         </script>
-        <?php endif; ?>
     </div>
 </section>
 
