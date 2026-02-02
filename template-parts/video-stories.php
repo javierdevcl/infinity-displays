@@ -63,9 +63,6 @@ if (!$video_stories->have_posts()) {
                     </div>
                 </div>
             </div>
-            <span class="text-xs text-muted-foreground font-medium text-center max-w-[100px] line-clamp-2">
-                <?php echo esc_html($label ? $label : get_the_title()); ?>
-            </span>
         </div>
         <?php endwhile; wp_reset_postdata(); ?>
     </div>

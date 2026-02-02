@@ -46,8 +46,17 @@ body.woocommerce-page .page {
 
 /* Sin padding para checkout (usa header minimalista) */
 body.woocommerce-checkout,
-body.checkout-page {
+body.checkout-page,
+body.woocommerce-checkout .woocommerce,
+body.woocommerce-checkout.woocommerce,
+.woocommerce-checkout {
     padding-top: 0 !important;
+}
+
+body.woocommerce-checkout main,
+body.checkout-page main {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* Ajuste de padding para móvil (header más pequeño + buscador) */
@@ -2898,18 +2907,6 @@ body.mobile-menu-open {
         box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
         padding: 1rem;
         margin: 0;
-        animation: slideUp 0.2s ease-out;
-    }
-
-    @keyframes slideUp {
-        from {
-            transform: translateY(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
     }
 
     #product-action-buttons.is-sticky button,
