@@ -46,9 +46,14 @@ body.woocommerce-page .page {
 
 /* Sin padding para checkout (usa header minimalista) */
 body.woocommerce-checkout,
-body.checkout-page,
-body.woocommerce-checkout .woocommerce,
 body.woocommerce-checkout.woocommerce,
+body.woocommerce-checkout.page,
+body.woocommerce-checkout .woocommerce,
+body.woocommerce-checkout .page,
+body.checkout-page,
+body.checkout-page.woocommerce,
+body.checkout-page .woocommerce,
+body.checkout-page .page,
 .woocommerce-checkout {
     padding-top: 0 !important;
 }
@@ -74,6 +79,17 @@ body.checkout-page main {
     body.woocommerce-page article.page,
     body.woocommerce-page .page {
         padding-top: 0;
+    }
+
+    /* Checkout sin padding en móvil */
+    body.woocommerce-checkout,
+    body.woocommerce-checkout.woocommerce,
+    body.woocommerce-checkout .woocommerce,
+    body.woocommerce-checkout .page,
+    body.checkout-page,
+    body.checkout-page .page,
+    body.checkout-page .woocommerce {
+        padding-top: 0 !important;
     }
 }
 
