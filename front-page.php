@@ -7,200 +7,186 @@
 
 get_header();
 
-// Hero slides - Trust/Brand messaging
+// Hero slides - Trust/Brand messaging with background images
 $hero_slides = array(
     array(
-        'title' => 'Calidad Profesional Garantizada',
-        'subtitle' => 'Productos de alta calidad para tu negocio',
-        'description' => 'Trabajamos solo con materiales premium y tecnología de punta para ofrecerte displays que impactan.',
-        'icon' => 'quality',
-        'color' => 'primary',
+        'title_prefix' => 'Importadores Directos de',
+        'title_highlight' => 'Estructuras Publicitarias',
+        'title_suffix' => '',
+        'description' => 'Los mejores precios del mercado con stock permanente',
+        'image' => INFINITY_THEME_URI . '/assets/images/hero/slide-quality.jpg',
     ),
     array(
-        'title' => 'Despacho en 24 Horas',
-        'subtitle' => 'Entrega rápida en Santiago',
-        'description' => 'Pedidos antes de las 14:00 hrs se despachan el mismo día. Envíos a todo Chile.',
-        'icon' => 'shipping',
-        'color' => 'green',
+        'title_prefix' => 'Despacho en',
+        'title_highlight' => '24 Horas',
+        'title_suffix' => 'en Santiago',
+        'description' => 'Envío express en Santiago y despacho a regiones',
+        'image' => INFINITY_THEME_URI . '/assets/images/hero/slide-delivery.jpg',
     ),
     array(
-        'title' => 'Sala de Ventas',
-        'subtitle' => 'Visítanos y conoce nuestros productos',
-        'description' => 'Ven a nuestra sala de ventas, prueba los productos y recibe asesoría personalizada de nuestro equipo.',
-        'icon' => 'store',
-        'color' => 'blue',
+        'title_prefix' => 'Visita Nuestra',
+        'title_highlight' => 'Sala de Ventas',
+        'title_suffix' => '',
+        'description' => 'Conoce nuestros productos y recibe asesoría personalizada',
+        'image' => INFINITY_THEME_URI . '/assets/images/hero/slide-showroom.jpg',
     ),
     array(
-        'title' => 'Stock Permanente',
-        'subtitle' => 'Bodega con inventario disponible',
-        'description' => 'Mantenemos stock de todos nuestros productos para que nunca tengas que esperar.',
-        'icon' => 'warehouse',
-        'color' => 'purple',
+        'title_prefix' => 'Bodega Propia con',
+        'title_highlight' => 'Stock Permanente',
+        'title_suffix' => '',
+        'description' => 'Miles de productos disponibles para entrega inmediata',
+        'image' => INFINITY_THEME_URI . '/assets/images/hero/slide-warehouse.jpg',
     ),
 );
 $slide_count = count($hero_slides);
 ?>
 
-<section class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
-    <!-- Decorative elements -->
-    <div class="absolute inset-0 opacity-30">
-        <div class="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-2xl"></div>
+<!-- Hero Slider with Background Images -->
+<section class="hero-section relative h-[500px] sm:h-[550px] md:h-[600px] lg:h-[650px] flex items-center justify-center overflow-hidden">
+    <!-- Background Images -->
+    <?php foreach ($hero_slides as $index => $slide): ?>
+    <div class="hero-bg absolute inset-0 z-0 transition-opacity duration-1000 ease-in-out <?php echo $index === 0 ? 'opacity-100' : 'opacity-0'; ?>" data-index="<?php echo $index; ?>">
+        <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['title_highlight']); ?>" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-900/98 via-slate-900/95 to-slate-900/90"></div>
+        <div class="absolute inset-0 bg-black/30"></div>
     </div>
+    <?php endforeach; ?>
 
-    <div class="container mx-auto px-4 py-12 lg:py-20">
-        <div class="hero-slider relative" data-slide-count="<?php echo $slide_count; ?>">
-            <!-- Slides Container -->
-            <div class="hero-slides">
-                <?php foreach ($hero_slides as $index => $slide): ?>
-                <div class="hero-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-index="<?php echo $index; ?>">
-                    <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+    <!-- Content -->
+    <div class="container mx-auto px-4 sm:px-6 relative z-10 text-center">
+        <div class="max-w-4xl mx-auto relative">
+            <?php foreach ($hero_slides as $index => $slide): ?>
+            <div class="hero-content transition-all duration-700 ease-in-out <?php echo $index === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 absolute inset-0 pointer-events-none'; ?>" data-index="<?php echo $index; ?>">
+                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 text-white uppercase tracking-wide leading-tight">
+                    <?php if ($slide['title_prefix']): ?>
+                    <span class="font-normal"><?php echo esc_html($slide['title_prefix']); ?></span>
+                    <?php endif; ?>
+                    <span class="font-black text-gradient-golden"><?php echo esc_html($slide['title_highlight']); ?></span>
+                    <?php if ($slide['title_suffix']): ?>
+                    <span class="font-normal"><?php echo esc_html($slide['title_suffix']); ?></span>
+                    <?php endif; ?>
+                </h1>
 
-                        <!-- Content - Left Side -->
-                        <div class="flex-1 z-10 text-left order-2 lg:order-1">
-                            <span class="inline-block px-4 py-1.5 bg-<?php echo $slide['color']; ?>-500/20 text-<?php echo $slide['color'] === 'primary' ? 'primary' : $slide['color'] . '-400'; ?> rounded-full text-sm font-semibold mb-4 uppercase tracking-wide border border-<?php echo $slide['color'] === 'primary' ? 'primary' : $slide['color'] . '-500'; ?>/30">
-                                <?php echo esc_html($slide['subtitle']); ?>
-                            </span>
+                <p class="text-lg sm:text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-8 sm:mb-10 px-2">
+                    <?php echo esc_html($slide['description']); ?>
+                </p>
 
-                            <h2 class="text-3xl lg:text-5xl font-display font-bold text-white mb-5 leading-tight">
-                                <?php echo esc_html($slide['title']); ?>
-                            </h2>
-
-                            <p class="text-lg text-gray-300 mb-8 max-w-xl leading-relaxed">
-                                <?php echo esc_html($slide['description']); ?>
-                            </p>
-
-                            <div class="flex flex-wrap gap-4">
-                                <a href="<?php echo get_permalink(wc_get_page_id('shop')); ?>" class="inline-flex items-center justify-center px-8 py-4 bg-primary text-white text-lg font-semibold rounded-xl hover:bg-primary/90 transition-all hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5">
-                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                                    </svg>
-                                    Ver Productos
-                                </a>
-                                <a href="https://wa.me/56942057591" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-white/10 text-white text-lg font-semibold rounded-xl hover:bg-white/20 transition-all border border-white/20">
-                                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                                    </svg>
-                                    Contactar
-                                </a>
-                            </div>
-                        </div>
-
-                        <!-- Icon/Visual - Right Side -->
-                        <div class="flex-shrink-0 order-1 lg:order-2">
-                            <div class="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 mx-auto">
-                                <!-- Animated background circles -->
-                                <div class="absolute inset-0 bg-<?php echo $slide['color'] === 'primary' ? 'primary' : $slide['color'] . '-500'; ?>/20 rounded-full animate-pulse"></div>
-                                <div class="absolute inset-4 bg-<?php echo $slide['color'] === 'primary' ? 'primary' : $slide['color'] . '-500'; ?>/10 rounded-full"></div>
-
-                                <!-- Icon -->
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <?php if ($slide['icon'] === 'quality'): ?>
-                                    <svg class="w-32 h-32 lg:w-40 lg:h-40 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                                    </svg>
-                                    <?php elseif ($slide['icon'] === 'shipping'): ?>
-                                    <svg class="w-32 h-32 lg:w-40 lg:h-40 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
-                                    </svg>
-                                    <?php elseif ($slide['icon'] === 'store'): ?>
-                                    <svg class="w-32 h-32 lg:w-40 lg:h-40 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                    </svg>
-                                    <?php elseif ($slide['icon'] === 'warehouse'): ?>
-                                    <svg class="w-32 h-32 lg:w-40 lg:h-40 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                                    </svg>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-
+                <!-- Badges -->
+                <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-10">
+                    <div class="flex items-center gap-2 sm:gap-2.5 bg-white/10 backdrop-blur-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/20">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
+                        </svg>
+                        <span class="text-sm sm:text-base font-medium text-white">Despacho 24h en Santiago</span>
+                    </div>
+                    <div class="flex items-center gap-2 sm:gap-2.5 bg-white/10 backdrop-blur-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/20">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                        <span class="text-sm sm:text-base font-medium text-white">Importadores Directos</span>
                     </div>
                 </div>
-                <?php endforeach; ?>
-            </div>
 
-            <!-- Navigation Arrows -->
-            <button class="hero-prev absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-20 hidden lg:flex">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-            </button>
-            <button class="hero-next absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-20 hidden lg:flex">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-            </button>
-
-            <!-- Dots Navigation -->
-            <div class="hero-dots flex justify-center gap-2 mt-10">
-                <?php for ($i = 0; $i < $slide_count; $i++): ?>
-                <button class="hero-dot w-2.5 h-2.5 rounded-full transition-all <?php echo $i === 0 ? 'bg-primary w-8' : 'bg-white/30 hover:bg-white/50'; ?>" data-index="<?php echo $i; ?>"></button>
-                <?php endfor; ?>
+                <!-- CTA Button -->
+                <a href="#productos" class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-8 sm:px-10 py-4 sm:py-5 rounded-xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl hover:shadow-primary/20 text-lg sm:text-xl">
+                    Ver Catálogo
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
             </div>
+            <?php endforeach; ?>
         </div>
+    </div>
 
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const slider = document.querySelector('.hero-slider');
-            if (!slider) return;
-
-            const slides = slider.querySelectorAll('.hero-slide');
-            const dots = slider.querySelectorAll('.hero-dot');
-            const prevBtn = slider.querySelector('.hero-prev');
-            const nextBtn = slider.querySelector('.hero-next');
-            const slideCount = parseInt(slider.dataset.slideCount);
-
-            if (slideCount <= 1) return;
-
-            let currentSlide = 0;
-            let autoplayInterval;
-
-            function showSlide(index) {
-                if (index >= slideCount) index = 0;
-                if (index < 0) index = slideCount - 1;
-
-                slides.forEach((slide, i) => {
-                    slide.classList.toggle('active', i === index);
-                });
-
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('bg-primary', i === index);
-                    dot.classList.toggle('w-8', i === index);
-                    dot.classList.toggle('bg-white/30', i !== index);
-                    dot.classList.toggle('w-2.5', i !== index);
-                });
-
-                currentSlide = index;
-            }
-
-            function nextSlide() { showSlide(currentSlide + 1); }
-            function prevSlide() { showSlide(currentSlide - 1); }
-            function startAutoplay() { autoplayInterval = setInterval(nextSlide, 5000); }
-            function stopAutoplay() { clearInterval(autoplayInterval); }
-
-            if (prevBtn) prevBtn.addEventListener('click', function() { stopAutoplay(); prevSlide(); startAutoplay(); });
-            if (nextBtn) nextBtn.addEventListener('click', function() { stopAutoplay(); nextSlide(); startAutoplay(); });
-
-            dots.forEach((dot, i) => {
-                dot.addEventListener('click', function() { stopAutoplay(); showSlide(i); startAutoplay(); });
-            });
-
-            // Touch support
-            let touchStartX = 0;
-            slider.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].screenX; stopAutoplay(); }, { passive: true });
-            slider.addEventListener('touchend', function(e) {
-                const diff = touchStartX - e.changedTouches[0].screenX;
-                if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
-                startAutoplay();
-            }, { passive: true });
-
-            startAutoplay();
-        });
-        </script>
+    <!-- Dots Navigation -->
+    <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        <?php for ($i = 0; $i < $slide_count; $i++): ?>
+        <button class="hero-dot rounded-full transition-all duration-500 <?php echo $i === 0 ? 'w-8 h-2 bg-white' : 'w-2 h-2 bg-white/50 hover:bg-white/70'; ?>" data-index="<?php echo $i; ?>" aria-label="Slide <?php echo $i + 1; ?>"></button>
+        <?php endfor; ?>
     </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('.hero-section');
+    if (!section) return;
+
+    const backgrounds = section.querySelectorAll('.hero-bg');
+    const contents = section.querySelectorAll('.hero-content');
+    const dots = section.querySelectorAll('.hero-dot');
+    const slideCount = backgrounds.length;
+
+    let currentSlide = 0;
+    let autoplayInterval;
+
+    function showSlide(index) {
+        if (index >= slideCount) index = 0;
+        if (index < 0) index = slideCount - 1;
+
+        // Update backgrounds
+        backgrounds.forEach((bg, i) => {
+            bg.classList.toggle('opacity-100', i === index);
+            bg.classList.toggle('opacity-0', i !== index);
+        });
+
+        // Update contents
+        contents.forEach((content, i) => {
+            if (i === index) {
+                content.classList.remove('opacity-0', 'translate-y-6', 'absolute', 'pointer-events-none');
+                content.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                content.classList.remove('opacity-100', 'translate-y-0');
+                content.classList.add('opacity-0', 'translate-y-6', 'absolute', 'pointer-events-none');
+            }
+        });
+
+        // Update dots
+        dots.forEach((dot, i) => {
+            if (i === index) {
+                dot.classList.remove('w-2', 'h-2', 'bg-white/50');
+                dot.classList.add('w-8', 'h-2', 'bg-white');
+            } else {
+                dot.classList.remove('w-8', 'bg-white');
+                dot.classList.add('w-2', 'h-2', 'bg-white/50');
+            }
+        });
+
+        currentSlide = index;
+    }
+
+    function nextSlide() { showSlide(currentSlide + 1); }
+    function prevSlide() { showSlide(currentSlide - 1); }
+    function startAutoplay() { autoplayInterval = setInterval(nextSlide, 6000); }
+    function stopAutoplay() { clearInterval(autoplayInterval); }
+
+    // Dot click handlers
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', function() {
+            stopAutoplay();
+            showSlide(i);
+            startAutoplay();
+        });
+    });
+
+    // Touch support
+    let touchStartX = 0;
+    section.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+        stopAutoplay();
+    }, { passive: true });
+
+    section.addEventListener('touchend', function(e) {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 50) {
+            diff > 0 ? nextSlide() : prevSlide();
+        }
+        startAutoplay();
+    }, { passive: true });
+
+    startAutoplay();
+});
+</script>
 
 <!-- Main Content with Sidebar -->
 <section class="py-6 bg-background">

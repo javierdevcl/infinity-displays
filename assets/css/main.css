@@ -99,6 +99,14 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
 }
 
+/* Golden Gradient Text */
+.text-gradient-golden {
+    background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 25%, #FCD34D 50%, #FBBF24 75%, #F59E0B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 img, picture, video, canvas, svg {
     display: block;
     max-width: 100%;
