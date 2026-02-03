@@ -47,8 +47,7 @@ $slide_count = count($hero_slides);
     <?php foreach ($hero_slides as $index => $slide): ?>
     <div class="hero-bg absolute inset-0 z-0 transition-opacity duration-1000 ease-in-out <?php echo $index === 0 ? 'opacity-100' : 'opacity-0'; ?>" data-index="<?php echo $index; ?>">
         <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['title_highlight']); ?>" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-r from-slate-900/98 via-slate-900/95 to-slate-900/90"></div>
-        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="absolute inset-0 bg-slate-900/80"></div>
     </div>
     <?php endforeach; ?>
 
@@ -61,7 +60,7 @@ $slide_count = count($hero_slides);
                     <?php if ($slide['title_prefix']): ?>
                     <span class="font-normal"><?php echo esc_html($slide['title_prefix']); ?></span>
                     <?php endif; ?>
-                    <span class="font-black text-gradient-golden"><?php echo esc_html($slide['title_highlight']); ?></span>
+                    <span class="font-black text-primary"><?php echo esc_html($slide['title_highlight']); ?></span>
                     <?php if ($slide['title_suffix']): ?>
                     <span class="font-normal"><?php echo esc_html($slide['title_suffix']); ?></span>
                     <?php endif; ?>
