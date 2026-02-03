@@ -42,21 +42,22 @@ $slide_count = count($hero_slides);
 ?>
 
 <!-- Hero Slider with Background Images -->
-<section class="hero-section relative h-[420px] sm:h-[480px] md:h-[550px] flex items-center justify-center overflow-hidden">
+<section class="hero-section relative h-[500px] sm:h-[550px] md:h-[600px] lg:h-[650px] flex items-center justify-center overflow-hidden">
     <!-- Background Images -->
     <?php foreach ($hero_slides as $index => $slide): ?>
-    <div class="hero-bg absolute inset-0 z-0 transition-all duration-700 <?php echo $index === 0 ? 'opacity-100' : 'opacity-0'; ?>" data-index="<?php echo $index; ?>">
+    <div class="hero-bg absolute inset-0 z-0 transition-opacity duration-1000 ease-in-out <?php echo $index === 0 ? 'opacity-100' : 'opacity-0'; ?>" data-index="<?php echo $index; ?>">
         <img src="<?php echo esc_url($slide['image']); ?>" alt="<?php echo esc_attr($slide['title_highlight']); ?>" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/90 to-slate-900/85"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-900/98 via-slate-900/95 to-slate-900/90"></div>
+        <div class="absolute inset-0 bg-black/30"></div>
     </div>
     <?php endforeach; ?>
 
     <!-- Content -->
     <div class="container mx-auto px-4 sm:px-6 relative z-10 text-center">
-        <div class="max-w-3xl mx-auto relative">
+        <div class="max-w-4xl mx-auto relative">
             <?php foreach ($hero_slides as $index => $slide): ?>
-            <div class="hero-content transition-all duration-500 <?php echo $index === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 absolute inset-0 pointer-events-none'; ?>" data-index="<?php echo $index; ?>">
-                <h1 class="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 sm:mb-4 text-white uppercase tracking-wide leading-tight">
+            <div class="hero-content transition-all duration-700 ease-in-out <?php echo $index === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6 absolute inset-0 pointer-events-none'; ?>" data-index="<?php echo $index; ?>">
+                <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 sm:mb-6 text-white uppercase tracking-wide leading-tight">
                     <?php if ($slide['title_prefix']): ?>
                     <span class="font-normal"><?php echo esc_html($slide['title_prefix']); ?></span>
                     <?php endif; ?>
@@ -66,30 +67,30 @@ $slide_count = count($hero_slides);
                     <?php endif; ?>
                 </h1>
 
-                <p class="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-5 sm:mb-8 px-2">
+                <p class="text-lg sm:text-xl md:text-2xl text-white/90 max-w-2xl mx-auto mb-8 sm:mb-10 px-2">
                     <?php echo esc_html($slide['description']); ?>
                 </p>
 
                 <!-- Badges -->
-                <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-5 sm:mb-8">
-                    <div class="flex items-center gap-1.5 sm:gap-2 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/20">
-                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-10">
+                    <div class="flex items-center gap-2 sm:gap-2.5 bg-white/10 backdrop-blur-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/20">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
                         </svg>
-                        <span class="text-xs sm:text-sm font-medium text-white">Despacho 24h en Santiago</span>
+                        <span class="text-sm sm:text-base font-medium text-white">Despacho 24h en Santiago</span>
                     </div>
-                    <div class="flex items-center gap-1.5 sm:gap-2 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/20">
-                        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="flex items-center gap-2 sm:gap-2.5 bg-white/10 backdrop-blur-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border border-white/20">
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                         </svg>
-                        <span class="text-xs sm:text-sm font-medium text-white">Importadores Directos</span>
+                        <span class="text-sm sm:text-base font-medium text-white">Importadores Directos</span>
                     </div>
                 </div>
 
                 <!-- CTA Button -->
-                <a href="#productos" class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl text-base sm:text-lg">
+                <a href="#productos" class="inline-flex items-center gap-2 bg-primary text-white font-semibold px-8 sm:px-10 py-4 sm:py-5 rounded-xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-xl hover:shadow-primary/20 text-lg sm:text-xl">
                     Ver Catálogo
-                    <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                     </svg>
                 </a>
@@ -99,9 +100,9 @@ $slide_count = count($hero_slides);
     </div>
 
     <!-- Dots Navigation -->
-    <div class="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1.5">
+    <div class="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         <?php for ($i = 0; $i < $slide_count; $i++): ?>
-        <button class="hero-dot rounded-full transition-all duration-300 <?php echo $i === 0 ? 'w-5 h-1.5 bg-white' : 'w-1.5 h-1.5 bg-white/50 hover:bg-white/70'; ?>" data-index="<?php echo $i; ?>" aria-label="Slide <?php echo $i + 1; ?>"></button>
+        <button class="hero-dot rounded-full transition-all duration-500 <?php echo $i === 0 ? 'w-8 h-2 bg-white' : 'w-2 h-2 bg-white/50 hover:bg-white/70'; ?>" data-index="<?php echo $i; ?>" aria-label="Slide <?php echo $i + 1; ?>"></button>
         <?php endfor; ?>
     </div>
 </section>
@@ -132,22 +133,22 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update contents
         contents.forEach((content, i) => {
             if (i === index) {
-                content.classList.remove('opacity-0', 'translate-y-4', 'absolute', 'pointer-events-none');
+                content.classList.remove('opacity-0', 'translate-y-6', 'absolute', 'pointer-events-none');
                 content.classList.add('opacity-100', 'translate-y-0');
             } else {
                 content.classList.remove('opacity-100', 'translate-y-0');
-                content.classList.add('opacity-0', 'translate-y-4', 'absolute', 'pointer-events-none');
+                content.classList.add('opacity-0', 'translate-y-6', 'absolute', 'pointer-events-none');
             }
         });
 
         // Update dots
         dots.forEach((dot, i) => {
             if (i === index) {
-                dot.classList.remove('w-1.5', 'h-1.5', 'bg-white/50');
-                dot.classList.add('w-5', 'h-1.5', 'bg-white');
+                dot.classList.remove('w-2', 'h-2', 'bg-white/50');
+                dot.classList.add('w-8', 'h-2', 'bg-white');
             } else {
-                dot.classList.remove('w-5', 'bg-white');
-                dot.classList.add('w-1.5', 'h-1.5', 'bg-white/50');
+                dot.classList.remove('w-8', 'bg-white');
+                dot.classList.add('w-2', 'h-2', 'bg-white/50');
             }
         });
 
@@ -156,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function nextSlide() { showSlide(currentSlide + 1); }
     function prevSlide() { showSlide(currentSlide - 1); }
-    function startAutoplay() { autoplayInterval = setInterval(nextSlide, 5000); }
+    function startAutoplay() { autoplayInterval = setInterval(nextSlide, 6000); }
     function stopAutoplay() { clearInterval(autoplayInterval); }
 
     // Dot click handlers
